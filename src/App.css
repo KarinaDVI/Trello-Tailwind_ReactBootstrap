@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hidden {
+  display: none;
+}
+
+.w-60{
+  width: 16rem;
+}
+.bg-blue-light{
+  background-color: #3490dc;
+}
