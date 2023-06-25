@@ -1,3 +1,5 @@
+/* Trello de ejemplo- template de tailwind */
+
 import React from 'react'
 /* En este si se ven los colores */
 export default function Trello() {
