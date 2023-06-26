@@ -3,7 +3,7 @@ import React from "react";
 import Task from "../atoms/Task";
 
 export default function TaskFrame({ drag, texto, idc, 
-                                    quitTask, priority,
+                                    confirmDelete, priority,
                                     background/* ,numero, setNumero */
                                  }) {
   return (
@@ -11,9 +11,9 @@ export default function TaskFrame({ drag, texto, idc,
       <div className="text-sm mt-2" key={idc}>
         <Task drag={drag} 
               textoVar={texto} 
-              idc={idc} 
-              quitTask={quitTask}
-              priority={priority}
+              idc={idc}
+              confirmDelete={confirmDelete}
+              priority={() => confirmDelete(idc)}
               background={background}
               />
 
