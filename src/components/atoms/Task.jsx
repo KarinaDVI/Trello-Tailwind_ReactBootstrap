@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 
-export default function Task({ drag, textoVar, idc, quitTask, background}) {
+export default function Task({ drag, textoVar, idc, confirmDelete, background}) {
 
 
-  const handleClick =()=>{
-    quitTask(idc);
-  }
+  /* const handleClick =()=>{
+    confirmDelete(idc);
+  } */
   
   return (
     
@@ -14,7 +14,7 @@ export default function Task({ drag, textoVar, idc, quitTask, background}) {
          draggable={true} key={idc}
     >
       <p>{textoVar}</p>
-      <a href="#" onClick={handleClick}>X</a>
+      <a href="#" onClick={()=>{confirmDelete(idc)}}>X</a>
       
     </div>
   );

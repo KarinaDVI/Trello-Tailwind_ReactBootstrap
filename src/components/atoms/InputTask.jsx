@@ -34,7 +34,7 @@ export default function InputTask({ idc, setIdc, addCard, textoVar,
         <Form.Control className="rounded w-60 text-sm break-words" as="textarea" placeholder='Introduzca un titulo para esta tarjeta' rows={3} ref={inputRef} onChange={handleTextoChange}/>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Prioritario" checked={isChecked} onChange={(e) => {setIsChecked(e.target.checked),setPriority(e.target.checked)}}/>
+        <Form.Check type="checkbox" label="Prioritario" checked={isChecked} onChange={(e) => {e.preventDefault, setIsChecked(e.target.checked),setPriority(e.target.checked)}}/>
       </Form.Group>
       <div className="inline-flex justify-content-between text-start w-100 align-items-center ">
           
