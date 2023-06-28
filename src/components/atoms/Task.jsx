@@ -13,7 +13,7 @@ export default function Task({ drag, textoVar, idc, confirmDelete, background}) 
          className={`flex justify-between ${background} p-2 rounded mt-1 border-b border-grey cursor-pointer hover:bg-grey-lighter`}
          draggable={true} key={idc}
     >
-      <p>{textoVar}</p>
+      <p className="break-all">{textoVar}</p>
       <a href="#" onClick={()=>{confirmDelete(idc)}}>X</a>
       
     </div>

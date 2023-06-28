@@ -1,4 +1,5 @@
 import React from 'react'
+import Dropdown from './atoms/dropdown'
 
 export default function Header() {
   return (
@@ -37,12 +38,15 @@ export default function Header() {
                     </ul>
                 </div>
                 
-                <div className="text-white font-sm text-underlined hidden md:flex items-center underline">
+                {/* <div className="text-white font-sm text-underlined hidden md:flex items-center underline">
                     <svg className="h-4 fill-current text-white cursor-pointer mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 10a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4zm7 0a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4zm7 0a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4z"/></svg>
                     Show menu
-                </div>
+                </div> */}
                 {/* dropdown  */}
+                <Dropdown textvar="ShowMenu"
+                          classvar="h-4 fill-current text-white cursor-pointer mr-2"
                 
+                />
                 {/*  */}
             </div>
     </div>
