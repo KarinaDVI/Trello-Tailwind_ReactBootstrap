@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Frame.css";
 import TaskFrame from "./molecule/TaskFrame";
 import DragAndDrop from "./utils/DragAndDrop";
 import InputTask from "./atoms/InputTask";
-
+import Dropdown from "./atoms/dropdown";
 /* Firebase imports */
 import {useNavigate} from 'react-router-dom';
-import {Link} from 'react-router-dom';
 import {collection, getDocs, getDoc, deleteDoc, doc} from 'firebase/firestore';
 import {addDoc} from 'firebase/firestore';
 import { db } from "../assets/firebaseConfig/firebase";
@@ -18,25 +17,16 @@ const MySwal = withReactContent(Swal);
 
 /*  */
 
-export default function Frame({titleList, idl}) {
+export default function Frame({titleList, idl, confirmDeleteL, confirmModifyL}) {
   const [idc, setIdc] = useState(0);
   const [showInput, setShowInput] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [textoVar, setTextoVar] = useState('');
   const [priority, setPriority] = useState(false);
-  const [background, setBackground] = useState("bg-white");
-  /* const [numero, setNumero] = useState(0); */
 
-  /* Firebase hooks */
- 
-  /* const [textoVar, setTExtovar] = useState(""); */
- /*  const [priority, setPriority] = useState(); */
+  
   const navigate = useNavigate();
-    /* Firebase modificar */
-    /* const [tasks, setTasks] = useState([]); */
-    /*  */
 
-  /*  */
 
   /* Firebase */
  //2 referenciamos la bd
@@ -58,7 +48,7 @@ export default function Frame({titleList, idl}) {
  }
 
     /* Mostrar firebase */
-    const getTasks = async () => {
+    const getTasks = async() => {
         
       const data = await getDocs(TaskCollection);
       //console.log(data.docs);
@@ -81,15 +71,12 @@ export default function Frame({titleList, idl}) {
     setShowInput(false);
   }
  const quitTask =async (id)=>{
-  /*  tasks.forEach((task)=>console.log(task.id,task.Descripcion, task.prioridad))
-  setTasks(tasks.filter((task)=>task.id!=id)) 
- */
+
     const taskDoc = doc(db, "Tareas", id);
     await deleteDoc(taskDoc);
     getTasks();
   }
 
- /* Firebase */
  const confirmDelete = (id)=>{
   Swal.fire({
       title: 'Are you sure?',
@@ -110,26 +97,13 @@ export default function Frame({titleList, idl}) {
       }
     })
 }
- /*  */
+
 
   const addCard = async (textoVar) => {
-   /*  setIdc(idc + 1);
-  
-    const newTask = {
-      id: idc,
-      texto: textoVar,
-      priority: priority,
-    };
-    setTasks([...tasks, newTask]); */
 
-    /* Firebase */
     await addDoc(TaskCollection, {Descripcion: textoVar, prioridad: priority, lista: idl });
-    alertaCreacion();
     getTasks();
-     /*  */
-    /*  */
   };
-  
 
   const handleAddCard = () => {
     
@@ -137,12 +111,18 @@ export default function Frame({titleList, idl}) {
     setTextoVar('');
 
   };
- 
+  
   return (
-      <div className="rounded bg-grey-light flex-no-shrink w-64 p-2 mr-3 max-h-screen overflow-y-scrool overflow-x-hidden" >
+      <div className="rounded bg-grey-light flex-no-shrink w-64 p-2 mr-3 max-h-screen overflow-y-scrool overflow-visible" >
         <div className="flex justify-between py-1">
-          <h3 className="text-sm">{titleList}</h3>
-          <svg className="h-4 fill-current text-grey-dark cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 10a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4zm7 0a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4zm7 0a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4z"/></svg>
+          <h3 className="text-sm break-all">{titleList}</h3>
+      
+        <Dropdown
+          textvar=""
+          classvar="h-4 fill-current text-grey-dark cursor-pointer"
+          confirmDeleteL={() => confirmDeleteL(idl)} // Pass the handleDeleteList function as a prop
+          confirmModifyL={() => confirmModifyL(idl)}
+       />
         </div>
 
         {tasks.map((task) => {
