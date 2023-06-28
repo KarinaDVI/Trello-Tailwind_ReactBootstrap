@@ -3,7 +3,7 @@ import "./Frame.css";
 import TaskFrame from "./molecule/TaskFrame";
 import DragAndDrop from "./utils/DragAndDrop";
 import InputTask from "./atoms/InputTask";
-import Dropdown from "./atoms/dropdown";
+import Dropdown from "./atoms/Dropdown";
 /* Firebase imports */
 import {useNavigate} from 'react-router-dom';
 import {collection, getDocs, getDoc, deleteDoc, doc} from 'firebase/firestore';

@@ -1,5 +1,5 @@
 import React from 'react'
-import Dropdown from './atoms/dropdown'
+import Dropdown from './atoms/Dropdown'
 
 export default function Header() {
   return (
