@@ -2,7 +2,6 @@ import React,{useState, useEffect} from 'react'
 import Frame from './Frame';
 import DragAndDrop from './utils/DragAndDrop';
 import InputList from './atoms/InputList';
-import Dropdown from './atoms/dropdown';
 
 /* Firebase imports */
 import {Link} from 'react-router-dom';
