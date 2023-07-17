@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Button } from 'react-bootstrap'
-import Dropdown from './atoms/dropdown'
+import Dropdown from './atoms/Dropdown'
 import { auth } from '../assets/firebaseConfig/firebase'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { redirect } from 'react-router-dom'
