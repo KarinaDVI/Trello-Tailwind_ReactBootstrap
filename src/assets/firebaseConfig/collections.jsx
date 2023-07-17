@@ -1,4 +1,5 @@
 export const dbCollections = {
     Listas: "Listas",
-    Tareas: "Tareas"
+    Tareas: "Tareas",
+    Trello: "Trello"
 }

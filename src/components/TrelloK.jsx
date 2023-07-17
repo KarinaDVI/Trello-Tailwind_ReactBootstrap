@@ -2,12 +2,15 @@ import React from 'react'
 import List from './List'
 import Header from './Header'
 
-export default function TrelloK() {
+export default function TrelloK({tableroId}) {
+
   return (
-    <div className="bg-blue w-screen h-screen font-sans">
+    <>
         <Header />
-        <List/>
+         {/*  {emailId && <List id={emailId} />} {// Render the List component with the emailId as the ID  */}
+        <List tableroId={tableroId}/>
+       <h2>Este es el tablero:{tableroId}</h2>
       
-    </div>
+    </>
   )
 }
