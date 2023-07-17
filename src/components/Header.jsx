@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-import Dropdown from './atoms/Dropdown'
-=======
 import React, {useState} from 'react'
 import { Button } from 'react-bootstrap'
 import Dropdown from './atoms/dropdown'
@@ -10,7 +6,6 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { redirect } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom'
->>>>>>> develop-firebase
 
 export default function Header() {
     /* const [user, setUser] = useState({});
@@ -80,17 +75,18 @@ export default function Header() {
                         <li><a href="https://karinadvi.github.io/lista_tareas-KB/"><span className="border-l border-blue-lighter px-2 text-sm ml-2">Lista de tareas javascript</span></a></li>
                     </ul>
                 </div>
-            
+                
+                {/* <div className="text-white font-sm text-underlined hidden md:flex items-center underline">
+                    <svg className="h-4 fill-current text-white cursor-pointer mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 10a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4zm7 0a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4zm7 0a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4z"/></svg>
+                    Show menu
+                </div> */}
+                {/* dropdown  */}
                 <Dropdown textvar="ShowMenu"
                           classvar="h-4 fill-current text-white cursor-pointer mr-2"
                 
                 />
-<<<<<<< HEAD
-              
-=======
                 
                 {/*  */}
->>>>>>> develop-firebase
             </div>
     </div>
   )

@@ -7,7 +7,6 @@ import InputList from './atoms/InputList';
 import {collection, getDocs, deleteDoc, doc, query, where} from 'firebase/firestore';
 import {addDoc} from 'firebase/firestore';
 import { db } from "../assets/firebaseConfig/firebase";
-import {async} from '@firebase/util';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -27,15 +26,6 @@ export default function List({tableroId}) {
     setShowList(false);
   };
 
-  /* Mostrar firebase */
-  /*         const getLists = async () => {
-        const data = await getDocs(ListsCollection);
-
-        setLists(
-        data.docs.map((docl)=>({...docl.data(), id:docl.id}))
-        )
-      } */
-
   /* getList nueva */
   const getLists = async () => {
     if (tableroId) {
@@ -51,30 +41,7 @@ export default function List({tableroId}) {
       console.log(datosListas);
     }
   };
-  /*  */
- /*  const getLists = async () => {
-    const data = await getDocs(ListsCollection);
-
-    setLists(
-    data.docs.map((docl)=>({...docl.data(), id:docl.id}))
-    )
-  }
-    useEffect(()=>{
-      getLists();
-  }, []) */
-  /*  */
-
-  /*   useEffect(()=>{
-          getLists();
-      }, []) */
-
-  /*   const addNewList = async (titleList)=>{
-        // Firebase 
-        await addDoc(ListsCollection, {Titulo: titleList});
-        // alertaCreacionLista(); 
-        getLists();
-      }  */
-
+  
   /* AddList nueva */
   useEffect(() => {
     getLists();
