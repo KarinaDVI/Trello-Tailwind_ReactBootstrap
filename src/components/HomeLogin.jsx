@@ -64,8 +64,8 @@ const handleSubmit = async(e)=>{
                     {/* <div className="text-sm">
                       <a href="#" className="text-sm font-light text-indigo-500 dark:text-gray-400">
                         Olvidaste la contraseña?
-                      </a> */}
-                    </div>
+                      </a>
+                    </div> */}
                   <input
                       id="password"
                       name="password"
