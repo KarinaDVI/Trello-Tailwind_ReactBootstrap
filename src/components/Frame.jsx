@@ -113,7 +113,7 @@ export default function Frame({titleList, idl, confirmDeleteL, confirmModifyL}) 
   };
   
   return (
-      <div className="rounded bg-grey-light flex-no-shrink w-64 p-2 mr-3 max-h-screen overflow-y-scrool overflow-visible" >
+      <div className="rounded bg-grey-light flex-no-shrink w-64 p-2 mr-3 max-h-screen my-2 overflow-y-scrool overflow-visible" >
         <div className="flex justify-between py-1">
           <h3 className="text-sm break-all">{titleList}</h3>
       
