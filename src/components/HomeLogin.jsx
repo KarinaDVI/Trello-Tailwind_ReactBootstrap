@@ -24,18 +24,6 @@ const handleSubmit = async(e)=>{
     }
 }
 
-/* const login = async()=>{
-    try{
-        const user = await signInWithEmailAndPassword(
-            auth, 
-            loginEmail, 
-            loginPassword);
-            console.log(user)
-        }catch (error){
-            console.log(error.message)
-        }
-} */
-
   return (
     <section className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">    
       <div className="w-full max-w-md">
@@ -73,10 +61,10 @@ const handleSubmit = async(e)=>{
                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Contraseña
                     </label>
-                    <div className="text-sm">
+                    {/* <div className="text-sm">
                       <a href="#" className="text-sm font-light text-indigo-500 dark:text-gray-400">
                         Olvidaste la contraseña?
-                      </a>
+                      </a> */}
                     </div>
                   <input
                       id="password"
