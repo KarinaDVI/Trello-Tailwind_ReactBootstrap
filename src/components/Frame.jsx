@@ -137,8 +137,8 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
         <Dropdown
           textvar=""
           classvar="h-4 fill-current text-grey-dark cursor-pointer"
-          confirmDeleteL={() => confirmDeleteL(idl)} // Pass the handleDeleteList function as a prop
-
+          execOnClick={() => confirmDeleteL(idl)} // Pass the handleDeleteList function as a prop
+          textDrop="Borrar lista"
        />
         </div>
 
