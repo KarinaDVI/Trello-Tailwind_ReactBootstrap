@@ -3,8 +3,10 @@ import Frame from './Frame';
 import DragAndDrop from './utils/DragAndDrop';
 import InputList from './atoms/InputList';
 
+import { dbCollections} from "../assets/firebaseConfig/collections";
+
 /* Firebase imports */
-import {collection, getDocs, deleteDoc, doc, query, where} from 'firebase/firestore';
+import {collection, getDocs, getDoc, deleteDoc, updateDoc, doc, query, where} from 'firebase/firestore';
 import {addDoc} from 'firebase/firestore';
 import { db } from "../assets/firebaseConfig/firebase";
 import {async} from '@firebase/util';
@@ -18,23 +20,23 @@ export default function List({tableroId}) {
   const [showList, setShowList] = useState(false);
   const [lists, setLists] = useState([]);
   const [titleList, setTitleList] = useState("");
+  const [modify, setModify] = useState(false);
+  const [valor, setValor]=useState('')
 
   const ListsCollection = collection(db, "Listas");
 
-  const handleAddList = () => {
-    addNewList(titleList);
+  const handleAddList = (idl) => {
+    if(modify){
+        confirmModifyL(idl)
+        setModify(false)
+    }else{
+        addNewList(titleList)
+    }
+
     setTitleList("");
     setShowList(false);
+    
   };
-
-  /* Mostrar firebase */
-  /*         const getLists = async () => {
-        const data = await getDocs(ListsCollection);
-
-        setLists(
-        data.docs.map((docl)=>({...docl.data(), id:docl.id}))
-        )
-      } */
 
   /* getList nueva */
   const getLists = async () => {
@@ -51,34 +53,13 @@ export default function List({tableroId}) {
       console.log(datosListas);
     }
   };
-  /*  */
- /*  const getLists = async () => {
-    const data = await getDocs(ListsCollection);
-
-    setLists(
-    data.docs.map((docl)=>({...docl.data(), id:docl.id}))
-    )
-  }
-    useEffect(()=>{
-      getLists();
-  }, []) */
-  /*  */
-
-  /*   useEffect(()=>{
-          getLists();
-      }, []) */
-
-  /*   const addNewList = async (titleList)=>{
-        // Firebase 
-        await addDoc(ListsCollection, {Titulo: titleList});
-        // alertaCreacionLista(); 
-        getLists();
-      }  */
 
   /* AddList nueva */
   useEffect(() => {
     getLists();
+
   }, [tableroId]);
+
 
   const addNewList = async (titleList) => {
     await addDoc(ListsCollection, { Titulo: titleList, trello: tableroId });
@@ -94,8 +75,10 @@ export default function List({tableroId}) {
 
   const cancelList = () => {
     setShowList(false);
+    setModify(false);
   };
 
+  //Borrar la lista y todas sus tareas asociadas
   const quitList = async (id) => {
     const listDocRef = doc(db, "Listas", id);
     const tasksCollectionRef = collection(db, "Tareas");
@@ -117,50 +100,93 @@ export default function List({tableroId}) {
     // Borrar el documento de la lista
     await deleteDoc(listDocRef);
 
-    // Actualizar la vista de listas
     getLists();
   };
 
-  const modifyList = async (id) => {
-    console.log("modificado!" + id);
-  };
-  /* Firebase */
+
+  /* Modificar*/
+const alertaGuardado = ()=>{
+  Swal.fire({
+  title: 'Registro modificado y guardado',
+  showClass: {
+      popup: 'animate__animated animate__fadeInDown'
+  },
+  hideClass: {
+      popup: 'animate__animated animate__fadeOutUp'
+  }
+  });
+}
+
+const noEncontrado = ()=>{
+  Swal.fire({
+  title: 'Lista no encontrada',
+  showClass: {
+      popup: 'animate__animated animate__fadeInDown'
+  },
+  hideClass: {
+      popup: 'animate__animated animate__fadeOutUp'
+  }
+  });
+}
+
+
+const update = async (id)=>{
+  const list = doc(db, dbCollections.Listas, id);
+  const listSnapshot = await getDoc(list);
+  if(listSnapshot.exists()){
+  const data = listSnapshot.data();
+    data.Titulo = valor;
+  await updateDoc(list, data);
+  alertaGuardado();
+  console.log("modificado!" + id);
+  getLists();
+  }else{
+    noEncontrado();
+  }
+};
+
+
+  /* Confirmar borrado de lista*/
   const confirmDeleteL = (id) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "Deseas eliminar?",
+      text: "Presione cancel para evitar!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Si, borralo!",
     }).then((result) => {
       if (result.isConfirmed) {
         quitList(id); // Call the quitList function to delete the list with the provided id
-        Swal.fire("Deleted!", "List has been deleted.", "success");
+        Swal.fire("Borrado!", "Se borró la lista.", "success");
       }
     });
   };
-  const confirmModifyL = (id) => {
+
+  /* Confirmar modificar listas */
+  const confirmModifyL = (idl) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "Deseas Modificar la lista?",
+      text: "Presiona cancel para evitarlo",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, modify it!",
+      confirmButtonText: "Si, modificalo!",
     }).then((result) => {
       if (result.isConfirmed) {
-        modifyList(id); // Call the quitList function to delete the list with the provided id
-        Swal.fire("Modified!", "List has been modified.", "success");
+        update(idl); // Call the quitList function to modify the list with the provided id
+        Swal.fire("Modificado!", "Se modificó la lista.", "success");
       }
     });
   };
+
   /*  */
 
   return (
     <div className="md:inline-flex bg-blue-300/50 rounded-md mx-2 px-4 pb-8 pt-8 items-start mt-[25px]">
+      
       {lists.map((list) => (
         <Frame
           key={list.id}
@@ -169,6 +195,15 @@ export default function List({tableroId}) {
           drag={DragAndDrop.drag}
           confirmDeleteL={() => confirmDeleteL(list.id)}
           confirmModifyL={() => confirmModifyL(list.id)}
+          setIdl={setIdl}
+          handleAddList={handleAddList}
+          setTitleList={setTitleList}
+          cancelList={cancelList}
+          modify={modify}
+          setModify={setModify}
+          valor={valor}
+          setValor={setValor}
+          
         />
       ))}
 
@@ -180,6 +215,7 @@ export default function List({tableroId}) {
           titleList={titleList}
           setTitleList={setTitleList}
           cancelList={cancelList}
+
         />
       ) : (
         <div className="d-block w-25">

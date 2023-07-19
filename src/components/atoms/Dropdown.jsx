@@ -39,11 +39,11 @@ export default function Dropdown({textvar,classvar, confirmDeleteL, idl, confirm
                 )}
                  onClick={()=>{confirmDeleteL(idl)}}
                 >
-                Borrar
+                Borrar Lista
                 </a>
             )}
             </Menu.Item>
-            <Menu.Item 
+            {/* <Menu.Item 
             onClick={()=>{confirmModifyL(idl)}}>
               {({ active }) => (
                 <a
@@ -56,7 +56,7 @@ export default function Dropdown({textvar,classvar, confirmDeleteL, idl, confirm
                   Modificar
                 </a>
               )}
-            </Menu.Item>
+            </Menu.Item> */}
            {/*  <Menu.Item>
               {({ active }) => (
                 <a
