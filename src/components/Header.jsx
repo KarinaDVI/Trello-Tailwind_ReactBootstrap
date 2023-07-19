@@ -6,6 +6,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { redirect } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2';
 
 export default function Header() {
     /* const [user, setUser] = useState({});
@@ -28,6 +29,21 @@ export default function Header() {
         console.log(e.message)
        }
     }
+    const alertInfo = ()=>{
+     
+      Swal.fire({
+        title: 'Realizado con React Bootstrap y Tailwind',
+        text: "(Si, ya sé que no se podía...)",
+        icon: 'info',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
+    }
+
   return (
     <div className="fixed-top justify-content-between w-full bg-blue-light">
             <div className="flex bg-blue-dark items-center mx-4 my-2">
@@ -83,6 +99,8 @@ export default function Header() {
                 {/* dropdown  */}
                 <Dropdown textvar="ShowMenu"
                           classvar="h-4 fill-current text-white cursor-pointer mr-2"
+                          execOnClick={alertInfo}
+                          textDrop="Info"
                 
                 />
                 
