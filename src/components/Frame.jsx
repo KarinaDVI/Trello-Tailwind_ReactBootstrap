@@ -12,29 +12,31 @@ import { db } from "../assets/firebaseConfig/firebase";
 import {async} from '@firebase/util';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import InputMList from './atoms/InputMList';
 
 const MySwal = withReactContent(Swal);
 
 /*  */
 
-export default function Frame({titleList, idl, confirmDeleteL, confirmModifyL}) {
+export default function Frame({titleList, idl, setIdl, confirmDeleteL, 
+                              confirmModifyL, handleAddList, 
+                              setTitleList, cancelList, valor, 
+                              modify, setModify, setValor
+                              }) {
   const [idc, setIdc] = useState(0);
   const [showInput, setShowInput] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [textoVar, setTextoVar] = useState('');
   const [priority, setPriority] = useState(false);
-
   
   const navigate = useNavigate();
-
 
   /* Firebase */
  //2 referenciamos la bd
 
  const TaskCollection = collection(db, "Tareas");
 
- //3 alerta de creacion
-
+ //Creacion de tareas
  const alertaCreacion = ()=>{
      Swal.fire({
      title: 'Tarea Creada',
@@ -51,10 +53,8 @@ export default function Frame({titleList, idl, confirmDeleteL, confirmModifyL}) 
     const getTasks = async() => {
         
       const data = await getDocs(TaskCollection);
-      //console.log(data.docs);
       setTasks(
           data.docs.map((docc)=>({...docc.data(), id:docc.id}))
-          //console.log(Tasks);
       )
   }
   /* Actualiza valores */
@@ -70,13 +70,14 @@ export default function Frame({titleList, idl, confirmDeleteL, confirmModifyL}) 
   const cancelTask =()=>{
     setShowInput(false);
   }
+  //Borrar tarea
  const quitTask =async (id)=>{
-
     const taskDoc = doc(db, "Tareas", id);
     await deleteDoc(taskDoc);
     getTasks();
   }
 
+//Borrado de tareas
  const confirmDelete = (id)=>{
   Swal.fire({
       title: 'Are you sure?',
@@ -98,7 +99,7 @@ export default function Frame({titleList, idl, confirmDeleteL, confirmModifyL}) 
     })
 }
 
-
+/*  Fin de modificar */
   const addCard = async (textoVar) => {
 
     await addDoc(TaskCollection, {Descripcion: textoVar, prioridad: priority, lista: idl });
@@ -106,7 +107,6 @@ export default function Frame({titleList, idl, confirmDeleteL, confirmModifyL}) 
   };
 
   const handleAddCard = () => {
-    
     addCard(textoVar);
     setTextoVar('');
 
@@ -114,14 +114,31 @@ export default function Frame({titleList, idl, confirmDeleteL, confirmModifyL}) 
   
   return (
       <div className="rounded bg-grey-light flex-no-shrink w-64 p-2 mr-3 max-h-screen my-2 overflow-y-scrool overflow-visible" >
-        <div className="flex justify-between py-1">
-          <h3 className="text-sm break-all">{titleList}</h3>
-      
+        <div className="flex justify-between pt-1">
+          {/* Falta desarrollar que haya que hacer click y saltar a input
+               Declarar estos estados en list: [modif, setModif] */}
+          { !modify?
+            (<h3 className="text-sm break-all px-2" onClick={()=>
+              setModify(true)}>{titleList}</h3>):
+            (<InputMList
+              idl={idl}
+              setIdl={setIdl}
+              handleAddList={handleAddList}
+              titleList={titleList}
+              setTitleList={setTitleList}
+              cancelList={cancelList}
+              modify={modify}
+              setModify={setModify}
+              valor={valor}
+              setValor={setValor}
+            />)
+
+          }
         <Dropdown
           textvar=""
           classvar="h-4 fill-current text-grey-dark cursor-pointer"
           confirmDeleteL={() => confirmDeleteL(idl)} // Pass the handleDeleteList function as a prop
-          confirmModifyL={() => confirmModifyL(idl)}
+
        />
         </div>
 
