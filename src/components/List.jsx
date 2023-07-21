@@ -21,7 +21,7 @@ export default function List({tableroId}) {
   const [titleList, setTitleList] = useState("");
   const [modify, setModify] = useState(false);
   const [valor, setValor]=useState('')
-  const[mode, setMode]= useState('')
+  const[mode, setMode]= useState(darkMode ? 'bg-slate-800' : 'bg-blue-300/50')
 
   const ListsCollection = collection(db, "Listas");
 
@@ -32,22 +32,24 @@ export default function List({tableroId}) {
     }else{
         addNewList(titleList)
     }
-
     setTitleList("");
     setShowList(false);
-    
   };
+
   useEffect(() => {
     isDarkmode();
-  }, [darkMode, mode]);
+    console.log('Mode está en:' + mode);
+  }, [darkMode]);
   
-  const isDarkmode = async() => {
+  const isDarkmode = async () => {
+    console.log(`Mode está en: ${mode}`);
     await setMode(darkMode ? 'bg-slate-800' : 'bg-blue-300/50');
+    console.log(`Mode está en: ${mode}`);
   };
   
-  useEffect(() => {
-    console.log("Mode está en:" + mode);
-  }, [mode]);
+/*   useEffect(() => {
+    console.log(`Mode está en:' , ${mode}`);
+  }, [mode]); */
 
   /* getList nueva */
   const getLists = async () => {
@@ -62,12 +64,15 @@ export default function List({tableroId}) {
       }));
       setLists(datosListas);
       console.log(datosListas);
+      console.log("darkmode en listas: "+darkMode)
     }
   };
 
   /* AddList nueva */
   useEffect(() => {
-    getLists();
+   
+    getLists(); 
+    isDarkmode();
 
   }, [tableroId]);
 

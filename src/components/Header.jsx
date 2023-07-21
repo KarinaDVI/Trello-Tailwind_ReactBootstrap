@@ -7,6 +7,7 @@ import { redirect } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
+import SwitchD from './atoms/SwitchD'
 
 export default function Header() {
   
@@ -66,7 +67,7 @@ export default function Header() {
 
                         <p className="text-white">{user && user.email} </p>
                         <Button className="text-white text-sm mr-2" onClick={handleLogout} >Salir</Button>
- 
+                        <SwitchD/>
                     </div>
                 </div >
                 

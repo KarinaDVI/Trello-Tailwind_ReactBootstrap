@@ -7,7 +7,7 @@ import Header from './Header';
 import TrelloK from './TrelloK';
 import InputTablero from './atoms/InputTablero';
 import { UserAuth } from '../context/AuthContext';
-import List from './ListO';
+import List from './List';
 
 export default function UserPanel() {
   const { userId } = UserAuth();

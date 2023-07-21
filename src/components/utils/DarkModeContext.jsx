@@ -4,6 +4,7 @@ import { collection, getDocs, updateDoc, getDoc, doc,addDoc, query, where, and }
 import { db } from '../../assets/firebaseConfig/firebase';
 import { dbCollections } from '../../assets/firebaseConfig/collections';
 import Swal from 'sweetalert2';
+
 const DarkModeContext = createContext();
 
 export const useDarkMode = () => {
@@ -17,48 +18,50 @@ export const DarkModeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState();
   const [colorMode, setColorMode] = useState([]);
   const [colorModeExists, setColorModeExists] = useState(false);
+  const [idColor, setIdColor] =useState('');
+
+  useEffect(() => {
+    getColorMode();
+  }, []);
+
 
   const toggleTheme = async () => {
 
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
-    
-    if (colorModeExists===false) { 
+    getColorMode()
+    if (colorMode.length==0) { 
       addColorMode(newDarkMode);
-    } else {
+    } 
+    if(colorMode.length==1) {
       updateColorMode(colorMode[0].id);
     }
+    
     console.log("Dark mode está en: " + newDarkMode);
   };
 
 
   const getColorMode = async () => {
     try {
+      console.log(userId)
       const querySnapshot = await getDocs(
         query(colorRef, where('user', '==', userId))
       );
-
       const dataColors = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data()
       }));
-      console.log("Get-ColorMode array ahora tiene: "+colorMode.length)
-      if (dataColors.length > 0) {
-        setColorMode(dataColors);
-        console.log("Get-ColorMode array ahora tiene: "+colorMode.length)
-        setColorModeExists(true);
-      } else {
-        setColorModeExists(false);
-      }
+      setColorMode(dataColors);
+      setIdColor(dataColors[0].id)
 
-      console.log(colorMode);
+      console.log('colorMode ',colorMode ,'dataColors ',dataColors);
     } catch (error) {
       console.log('No se puede cargar:', error);
     }
   };
 
   const addColorMode = async (darkMode) => {
-    console.log("En colorMode: "+colorMode)
+    console.log('En addColorMode: ',colorMode)
     try {
       await addDoc(colorRef, {
         color: darkMode,
@@ -84,13 +87,7 @@ export const DarkModeProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    getColorMode();
-  }, []);
-
- /*  useEffect(() => {
-    console.log(colorMode);
-  }, [colorMode]); */
+ 
   
 
   const noEncontrado = () => {

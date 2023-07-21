@@ -1,5 +1,5 @@
 import React from 'react'
-import List from './ListO'
+import List from './List'
 import Header from './Header'
 
 export default function TrelloK({tableroId}) {
