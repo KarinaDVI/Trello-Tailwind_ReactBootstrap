@@ -24,17 +24,6 @@ const handleSubmit = async(e)=>{
     }
 }
 
-/* const login = async()=>{
-    try{
-        const user = await signInWithEmailAndPassword(
-            auth, 
-            loginEmail, 
-            loginPassword);
-            console.log(user)
-        }catch (error){
-            console.log(error.message)
-        }
-} */
 
   return (
     <section className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">    

@@ -9,14 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
 
 export default function Header() {
-    /* const [user, setUser] = useState({});
-        onAuthStateChanged(auth, (currentUser)=>{
-            setUser(currentUser);
-        }) */
-    /* const logout = async ()=>{
-        await signOut(auth);
-        redirect("/login")
-    } */
+  
     const {user, logout} = UserAuth();
     const navigate = useNavigate();
 
@@ -72,8 +65,7 @@ export default function Header() {
                         
 
                         <p className="text-white">{user && user.email} </p>
-{/*                         <Button className="text-white text-sm mr-2" onClick={()=>{logout(), console.log("Saliste")}} >Salir</Button>
- */}                        <Button className="text-white text-sm mr-2" onClick={handleLogout} >Salir</Button>
+                        <Button className="text-white text-sm mr-2" onClick={handleLogout} >Salir</Button>
  
                     </div>
                 </div >
