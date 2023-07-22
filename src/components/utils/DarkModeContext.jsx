@@ -15,46 +15,51 @@ export const DarkModeProvider = ({ children }) => {
   const { userId } = UserAuth();
   const colorRef = collection(db, 'ColorMode');
 
-  const [darkMode, setDarkMode] = useState();
+  const [darkMode, setDarkMode] = useState(null);
   const [colorMode, setColorMode] = useState([]);
-  const [colorModeExists, setColorModeExists] = useState(false);
   const [idColor, setIdColor] =useState('');
+  const [loading, setLoading] = useState(true); // Nuevo estado de carga
 
   useEffect(() => {
     getColorMode();
-  }, []);
+  }, [userId]);
 
+  useEffect(() => {
+    console.log('colorMode actualizado:', colorMode);
+    // Una vez que los datos de Firebase se obtienen y actualizan colorMode, establecer el valor de darkMode
+    if (colorMode.length > 0) {
+      setDarkMode(colorMode[0].color);
+    }
+    setLoading(false); // Finalizar la carga
+  }, [colorMode]);
 
   const toggleTheme = async () => {
-
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    getColorMode()
-    if (colorMode.length==0) { 
-      addColorMode(newDarkMode);
-    } 
-    if(colorMode.length==1) {
-      updateColorMode(colorMode[0].id);
+    // Actualizar el estado del modo oscuro de manera síncrona
+    setDarkMode(darkMode);
+    if (colorMode.length === 0) {
+      addColorMode(darkMode);
     }
-    
-    console.log("Dark mode está en: " + newDarkMode);
+    if (colorMode.length === 1) {
+      await updateColorMode(idColor);
+    }
+    console.log("Dark mode está en: " + darkMode);
   };
-
 
   const getColorMode = async () => {
     try {
-      console.log(userId)
-      const querySnapshot = await getDocs(
-        query(colorRef, where('user', '==', userId))
-      );
-      const dataColors = querySnapshot.docs.map((doc) => ({
+      console.log("userId: ", userId)
+     
+      const q = query(colorRef, where("user", "==", userId));
+      const snapshot = await getDocs(q);
+      const dataColors = snapshot.docs.map((doc) => ({
+        ...doc.data(),
         id: doc.id,
-        ...doc.data()
       }));
+      /*  */
       setColorMode(dataColors);
       setIdColor(dataColors[0].id)
-
-      console.log('colorMode ',colorMode ,'dataColors ',dataColors);
+      /* setDarkMode(dataColors[0].color); */
+      console.log('getColorMode: colorMode ',colorMode ,'dataColors ',dataColors);
     } catch (error) {
       console.log('No se puede cargar:', error);
     }
@@ -78,7 +83,7 @@ export const DarkModeProvider = ({ children }) => {
     const listSnapshot = await getDoc(colorList);
     if (listSnapshot.exists()) {
       const data = listSnapshot.data();
-      data.color = darkMode;
+      data.color = !darkMode;
       await updateDoc(colorList, data);
       console.log("modificado!" + id);
       getColorMode();

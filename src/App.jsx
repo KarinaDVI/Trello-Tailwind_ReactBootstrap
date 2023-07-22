@@ -37,8 +37,6 @@ export default App
 
 /* Cosas que faltan hacer: 
   -Implementar drag and drop de tareas.
-  -Declarar variables de estado [modif, setModif]=useState(false)
-    para el metodo de modificar y crear.
-  -Pasarle por props el estado a frame y que opere con ternario sobre el 
-    h3 con el titulo y el input.
+  -Hacer que cuando se cree un usuario se cree el colorMode y que
+  el componente DarkModeContext solo actualice ese colorMode
   */

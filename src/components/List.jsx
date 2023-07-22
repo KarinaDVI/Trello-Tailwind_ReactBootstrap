@@ -12,6 +12,7 @@ import { db } from "../assets/firebaseConfig/firebase";
 import {async} from '@firebase/util';
 import Swal from 'sweetalert2';
 import { useDarkMode } from './utils/DarkModeContext';
+import { UserAuth } from '../context/AuthContext';
 
 export default function List({tableroId}) {
   const {darkMode} = useDarkMode();
@@ -21,8 +22,7 @@ export default function List({tableroId}) {
   const [titleList, setTitleList] = useState("");
   const [modify, setModify] = useState(false);
   const [valor, setValor]=useState('')
-  const[mode, setMode]= useState(darkMode ? 'bg-slate-800' : 'bg-blue-300/50')
-
+  const { userId } = UserAuth();
   const ListsCollection = collection(db, "Listas");
 
   const handleAddList = (idl) => {
@@ -35,21 +35,7 @@ export default function List({tableroId}) {
     setTitleList("");
     setShowList(false);
   };
-
-  useEffect(() => {
-    isDarkmode();
-    console.log('Mode está en:' + mode);
-  }, [darkMode]);
   
-  const isDarkmode = async () => {
-    console.log(`Mode está en: ${mode}`);
-    await setMode(darkMode ? 'bg-slate-800' : 'bg-blue-300/50');
-    console.log(`Mode está en: ${mode}`);
-  };
-  
-/*   useEffect(() => {
-    console.log(`Mode está en:' , ${mode}`);
-  }, [mode]); */
 
   /* getList nueva */
   const getLists = async () => {
@@ -71,8 +57,7 @@ export default function List({tableroId}) {
   /* AddList nueva */
   useEffect(() => {
    
-    getLists(); 
-    isDarkmode();
+    getLists();
 
   }, [tableroId]);
 
@@ -201,7 +186,7 @@ const update = async (id)=>{
   /*  */
 
   return (
-    <div className={`md:inline-flex ${mode} rounded-md mx-2 px-4 pb-8 pt-8 items-start mt-[25px]`}>
+    <div className={`md:inline-flex ${darkMode ? 'bg-slate-800' : 'bg-blue-300/50'} rounded-md mx-2 px-4 pb-8 pt-8 items-start mt-[25px]`}>
       
       {lists.map((list) => (
         <Frame
