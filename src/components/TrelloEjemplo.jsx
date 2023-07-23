@@ -2,7 +2,7 @@
 
 import React from 'react'
 /* En este si se ven los colores */
-export default function Trello() {
+export default function TrelloEjemplo() {
   return (
    /*  <!-- component --> */
 <div className="bg-blue w-full h-screen font-sans">

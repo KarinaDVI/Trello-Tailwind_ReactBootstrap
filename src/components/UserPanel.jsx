@@ -9,6 +9,7 @@ import InputTablero from './atoms/InputTablero';
 import { UserAuth } from '../context/AuthContext';
 import List from './List';
 import { useDarkMode } from './utils/DarkModeContext';
+import Swal from 'sweetalert2';
 
 export default function UserPanel() {
   const { userId } = UserAuth();
@@ -52,13 +53,21 @@ export default function UserPanel() {
   const handleShowTablero = (id) => {
     setShowTablero(true);
     setSelectedTablero(id)
-    console.log("Tablero id: " + id)
+    /* console.log("Tablero id: " + id) */
   };
 
   const quitTablero = async (id) => {
     const tableroDoc = doc(db, 'Trello2', id);
     await deleteDoc(tableroDoc);
   };
+
+  const errorAddTablero = () =>{
+    Swal.fire({
+      icon: 'error',
+      title: 'No se pudo crear el tablero!',
+      text: ' Intente luego de un rato'
+    })
+  }
 
   const addTablero = async (titleTablero) => {
     try {
@@ -68,7 +77,8 @@ export default function UserPanel() {
       });
       obtenerTableros();
     } catch (error) {
-      console.error('Error al agregar el tablero:', error);
+
+      errorAddTablero();
     }
   };
 
