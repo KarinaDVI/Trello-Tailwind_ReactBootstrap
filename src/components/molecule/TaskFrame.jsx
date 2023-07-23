@@ -4,7 +4,7 @@ import Task from "../atoms/Task";
 
 export default function TaskFrame({ drag, texto, idc, 
                                     confirmDelete, priority,
-                                    background/* ,numero, setNumero */
+                                    background, border/* ,numero, setNumero */
                                  }) {
   return (
     
@@ -15,6 +15,7 @@ export default function TaskFrame({ drag, texto, idc,
               confirmDelete={confirmDelete}
               priority={() => confirmDelete(idc)}
               background={background}
+              border={border}
               />
 
       </div>

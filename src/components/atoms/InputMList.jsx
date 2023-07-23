@@ -34,19 +34,8 @@ export default function InputMList({ idl, setIdl, titleList,
     <Form>
       <Form.Group className="m-0" controlId="formControlTextarea">
         {/* Aqui tomo el texto del input */}
-        <Form.Control className="rounded text-sm w-52 py-1 px-2" /* as="textarea" */ placeholder='Introduzca el titulo de la lista..' rows="1" ref={inputlmRef} onChange={handleTitleChange} onBlur={handleBlur} defaultValue={titleList}/>
+        <Form.Control className="rounded text-sm text-gray-600 w-52 py-1 px-2" /* as="textarea" */ placeholder='Introduzca el titulo de la lista..' rows="1" ref={inputlmRef} onChange={handleTitleChange} onBlur={handleBlur} defaultValue={titleList}/>
       </Form.Group>
-      {/* <div className="inline-flex justify-content-between text-start w-100 align-items-center ">
-          
-          <Button variant="primary" type="button" className="object-left text-sm bg-blue-600 hover:bg-blue-700 rounded-md text-white px-2" onClick={()=>{handleAddList(idl)}}>
-            Modificar Lista
-          </Button> */}
-          
-          {/* <Button variant="secondary" type="button" className="object-center bg-transparent px-2 text-2xl cursor-pointer alert-del text-gray-600/75 hover:text-gray-700/75" onClick={()=>{cancelList()}}>
-            <h3 className="material-symbols-outlined text-bottom p-0 h-25">close</h3>
-          </Button> 
-          
-      </div>*/}
     </Form>
     
     </div>

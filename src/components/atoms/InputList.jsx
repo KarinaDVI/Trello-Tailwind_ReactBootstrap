@@ -21,11 +21,11 @@ export default function InputList({ idl, setIdl, titleList,
   }
 
   return (
-    <div className={`rounded bg-grey-light flex w-64 p-2 h-auto  mr-3`}>
+    <div className={`rounded bg-grey-light text-gray-500 flex w-64 p-2 h-auto  mr-3`}>
     <Form>
       <Form.Group className="mb-3" controlId="formControlTextarea">
         {/* Aqui tomo el texto del input */}
-        <Form.Control className="rounded text-sm w-60 p-2" as="textarea" placeholder='Introduzca el titulo de la lista..' rows={2} ref={inputlRef} onChange={handleTitleChange}/>
+        <Form.Control className="rounded text-sm text-gray-600 w-60 p-2" as="textarea" placeholder='Introduzca el titulo de la lista..' rows={2} ref={inputlRef} onChange={handleTitleChange}/>
       </Form.Group>
       <div className="inline-flex justify-content-between text-start w-100 align-items-center ">
           

@@ -10,18 +10,16 @@ import {collection, getDocs, getDoc, deleteDoc, updateDoc, doc, query, where} fr
 import {addDoc} from 'firebase/firestore';
 import { db } from "../assets/firebaseConfig/firebase";
 import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-
-const MySwal = withReactContent(Swal);
+import { useDarkMode } from './utils/DarkModeContext';
 
 export default function List({tableroId}) {
+  const {darkMode} = useDarkMode();
   const [idl, setIdl] = useState(0);
   const [showList, setShowList] = useState(false);
   const [lists, setLists] = useState([]);
   const [titleList, setTitleList] = useState("");
   const [modify, setModify] = useState(false);
   const [valor, setValor]=useState('')
-
   const ListsCollection = collection(db, "Listas");
 
   const handleAddList = (idl) => {
@@ -31,16 +29,14 @@ export default function List({tableroId}) {
     }else{
         addNewList(titleList)
     }
-
     setTitleList("");
     setShowList(false);
-    
   };
+  
 
   /* getList nueva */
   const getLists = async () => {
     if (tableroId) {
-      /* const listasRef = collection(ListsCollection); */
       console.log("tableroId: "+tableroId)
       const q = query(ListsCollection, where("trello", "==", tableroId));
       const snapshot = await getDocs(q);
@@ -50,11 +46,13 @@ export default function List({tableroId}) {
       }));
       setLists(datosListas);
       console.log(datosListas);
+      console.log("darkmode en listas: "+darkMode)
     }
   };
 
   /* AddList nueva */
   useEffect(() => {
+   
     getLists();
 
   }, [tableroId]);
@@ -82,21 +80,17 @@ export default function List({tableroId}) {
     const listDocRef = doc(db, "Listas", id);
     const tasksCollectionRef = collection(db, "Tareas");
 
-    // Obtener todas las tareas asociadas a la lista
     const querySnapshot = await getDocs(
       query(tasksCollectionRef, where("lista", "==", id))
     );
 
-    // Borrar cada tarea individualmente
     const deleteTasks = querySnapshot.docs.map(async (taskDoc) => {
       await deleteDoc(taskDoc.ref);
       console.log(`Borrada tarea ${taskDoc.id}`);
     });
 
-    // Esperar a que se borren todas las tareas
     await Promise.all(deleteTasks);
 
-    // Borrar el documento de la lista
     await deleteDoc(listDocRef);
 
     getLists();
@@ -184,8 +178,8 @@ const update = async (id)=>{
   /*  */
 
   return (
-    <div className="md:inline-flex bg-blue-300/50 rounded-md mx-2 px-4 pb-8 pt-8 items-start mt-[25px]">
-      
+
+  <div className={`grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 ${darkMode ? 'bg-slate-800' : 'bg-blue-300/50'} px-4 pb-8 pt-8 md:flex-wrap`}>
       {lists.map((list) => (
         <Frame
           key={list.id}
@@ -202,7 +196,7 @@ const update = async (id)=>{
           setModify={setModify}
           valor={valor}
           setValor={setValor}
-          
+          className="flex-none w-80 p-4 border rounded-lg shadow-md mb-4"
         />
       ))}
 
@@ -220,7 +214,7 @@ const update = async (id)=>{
         <div className="d-block w-25">
           <button
             type="button"
-            className="w-64 border-none rounded-2xl text-start ps-3 py-3 pe-8 pe-8 bg-gray-600 bg-opacity-50 hover:opacity-75 text-gray-100/75 text-sm "
+            className={`w-64 border-none rounded-2xl text-start ps-3 py-3 pe-8 pe-8 ${darkMode ? 'bg-slate-600 bg-opacity-80 text-slate-50' :'bg-gray-600 text-gray-100/75'} bg-opacity-50 hover:opacity-75  text-sm`}
             onClick={hideList}
           >
             {lists.length < 1 ? "+Añada una lista..." : "+Añada otra lista..."}

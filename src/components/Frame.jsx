@@ -13,6 +13,7 @@ import {async} from '@firebase/util';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import InputMList from './atoms/InputMList';
+import { useDarkMode } from './utils/DarkModeContext';
 
 const MySwal = withReactContent(Swal);
 
@@ -28,6 +29,7 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
   const [tasks, setTasks] = useState([]);
   const [textoVar, setTextoVar] = useState('');
   const [priority, setPriority] = useState(false);
+  const {darkMode} = useDarkMode();
   
   const navigate = useNavigate();
 
@@ -113,7 +115,9 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
   };
   
   return (
-      <div className="rounded bg-grey-light flex-no-shrink w-64 p-2 mr-3 max-h-screen my-2 overflow-y-scrool overflow-visible" >
+/*       <div className="rounded bg-grey-light flex-no-shrink w-64 p-2 mr-3 max-h-screen my-2 overflow-y-scrool overflow-visible" >
+ */      <div className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mr-3 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
+
         <div className="flex justify-between pt-1">
           {/* Falta desarrollar que haya que hacer click y saltar a input
                Declarar estos estados en list: [modif, setModif] */}
@@ -146,12 +150,14 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
         if (task.lista === idl) {
           return (
             <TaskFrame
+            className={`${darkMode?'text-gray-100 hover:text-slate-50':'text-black'}`}
               key={task.id}
               texto={task.Descripcion}
               idc={task.id}
               drag={DragAndDrop.drag}
               confirmDelete={() => confirmDelete(task.id)}
-              background={task.prioridad ? "bg-red-400" : "bg-white"}
+              background={task.prioridad ? "bg-red-400" : `${darkMode?'bg-gray-700 text-gray-400':'bg-white text-black'}`}
+              border={`${darkMode?'border-b border-gray-500 cursor-pointer hover:bg-gray-600':'border-b border-grey cursor-pointer hover:bg-grey-lighter'}`}
             />
           );
         }
@@ -169,7 +175,7 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
               />
         ) : (
           <a href="#" onClick={newTask}>
-            <p className="mt-3 text-grey-dark text-sm">+Añada una tarjeta...</p>
+            <p className={`mt-3 ${darkMode ? 'text-slate-50' :'text-grey-dark'} text-sm`}>+Añada una tarjeta...</p>
           </a>
         )}
       </div>
