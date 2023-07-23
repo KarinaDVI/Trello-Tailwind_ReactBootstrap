@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Button } from 'react-bootstrap'
-import Dropdown from './atoms/dropdown'
+import Dropdown from './atoms/Dropdown'
 import { UserAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
