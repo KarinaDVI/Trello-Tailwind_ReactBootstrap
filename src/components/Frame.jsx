@@ -37,7 +37,6 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
 
     /* Mostrar firebase */
     const getTasks = async() => {
-        
       const data = await getDocs(TaskCollection);
       setTasks(
           data.docs.map((docc)=>({...docc.data(), id:docc.id}))
@@ -95,7 +94,6 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
   const handleAddCard = () => {
     addCard(textoVar);
     setTextoVar('');
-
   };
   
   return (

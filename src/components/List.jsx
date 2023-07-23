@@ -37,7 +37,6 @@ export default function List({tableroId}) {
   /* getList nueva */
   const getLists = async () => {
     if (tableroId) {
-      console.log("tableroId: "+tableroId)
       const q = query(ListsCollection, where("trello", "==", tableroId));
       const snapshot = await getDocs(q);
       const datosListas = snapshot.docs.map((doc) => ({
@@ -45,8 +44,6 @@ export default function List({tableroId}) {
         id: doc.id,
       }));
       setLists(datosListas);
-      console.log(datosListas);
-      console.log("darkmode en listas: "+darkMode)
     }
   };
 
@@ -61,12 +58,10 @@ export default function List({tableroId}) {
   const addNewList = async (titleList) => {
     await addDoc(ListsCollection, { Titulo: titleList, trello: tableroId });
     getLists();
-    console.log("Lista del trello: "+tableroId)
   };
   /*  */
 
   const hideList = () => {
-    console.log("ejecutado");
     setShowList(true);
   };
 
@@ -79,18 +74,14 @@ export default function List({tableroId}) {
   const quitList = async (id) => {
     const listDocRef = doc(db, "Listas", id);
     const tasksCollectionRef = collection(db, "Tareas");
-
     const querySnapshot = await getDocs(
       query(tasksCollectionRef, where("lista", "==", id))
     );
 
     const deleteTasks = querySnapshot.docs.map(async (taskDoc) => {
       await deleteDoc(taskDoc.ref);
-      console.log(`Borrada tarea ${taskDoc.id}`);
     });
-
     await Promise.all(deleteTasks);
-
     await deleteDoc(listDocRef);
 
     getLists();
@@ -131,7 +122,6 @@ const update = async (id)=>{
     data.Titulo = valor;
   await updateDoc(list, data);
   alertaGuardado();
-  console.log("modificado!" + id);
   getLists();
   }else{
     noEncontrado();

@@ -31,9 +31,8 @@ export default function UserPanel() {
         ...doc.data()
       }));
       setTablero(datosTableros);
-      console.log(tablero)
     } catch (error) {
-      console.log('No se puede cargar:', error);
+      errorOpTablero('No se puede cargar el tablero', 'Si está seguro que existe intente nuevamente')
     }
   };
 
@@ -45,7 +44,6 @@ export default function UserPanel() {
     setShowInputTablero(false);
   };
   const hideTablero = () => {
-    console.log("ejecutado")
     setShowInputTablero(true);
   };
 
@@ -60,11 +58,11 @@ export default function UserPanel() {
     await deleteDoc(tableroDoc);
   };
 
-  const errorAddTablero = () =>{
+  const errorOpTablero = (titlep, textp) =>{
     Swal.fire({
       icon: 'error',
-      title: 'No se pudo crear el tablero!',
-      text: ' Intente luego de un rato'
+      title: titlep,
+      text: textp
     })
   }
 
@@ -77,7 +75,7 @@ export default function UserPanel() {
       obtenerTableros();
     } catch (error) {
 
-      errorAddTablero();
+      errorOpTablero('No se pudo crear el tablero','Intente dentro de un rato');
     }
   };
 
