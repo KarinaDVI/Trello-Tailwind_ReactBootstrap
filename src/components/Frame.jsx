@@ -3,7 +3,7 @@ import "./Frame.css";
 import TaskFrame from "./molecule/TaskFrame";
 import DragAndDrop from "./utils/DragAndDrop";
 import InputTask from "./atoms/InputTask";
-import Dropdown from "./atoms/Dropdown";
+import Dropdown from "./atoms/dropdown";
 /* Firebase imports */
 import {useNavigate} from 'react-router-dom';
 import {collection, getDocs, getDoc, deleteDoc, doc} from 'firebase/firestore';
@@ -33,23 +33,7 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
   
   const navigate = useNavigate();
 
-  /* Firebase */
- //2 referenciamos la bd
-
  const TaskCollection = collection(db, "Tareas");
-
- //Creacion de tareas
- const alertaCreacion = ()=>{
-     Swal.fire({
-     title: 'Tarea Creada',
-     showClass: {
-         popup: 'animate__animated animate__fadeInDown'
-     },
-     hideClass: {
-         popup: 'animate__animated animate__fadeOutUp'
-     }
-     });
- }
 
     /* Mostrar firebase */
     const getTasks = async() => {
@@ -115,12 +99,10 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
   };
   
   return (
-/*       <div className="rounded bg-grey-light flex-no-shrink w-64 p-2 mr-3 max-h-screen my-2 overflow-y-scrool overflow-visible" >
- */      <div className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mr-3 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
+
+      <div className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mr-3 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
 
         <div className="flex justify-between pt-1">
-          {/* Falta desarrollar que haya que hacer click y saltar a input
-               Declarar estos estados en list: [modif, setModif] */}
           { !modify?
             (<h3 className="text-sm break-all px-2" onClick={()=>
               setModify(true)}>{titleList}</h3>):
