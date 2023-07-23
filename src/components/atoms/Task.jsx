@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-export default function Task({ drag, textoVar, idc, confirmDelete, background}) {
+export default function Task({ drag, textoVar, idc, confirmDelete, background, border}) {
 
 
   /* const handleClick =()=>{
@@ -10,7 +10,7 @@ export default function Task({ drag, textoVar, idc, confirmDelete, background}) 
   return (
     
     <div
-         className={`flex justify-between ${background} p-2 rounded mt-1 border-b border-grey cursor-pointer hover:bg-grey-lighter`}
+         className={`flex justify-between ${background} p-2 rounded mt-1 ${border}`}
          draggable={true} key={idc}
     >
       <p className="break-all">{textoVar}</p>

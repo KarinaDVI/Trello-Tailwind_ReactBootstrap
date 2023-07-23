@@ -18,7 +18,7 @@ export const DarkModeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(null);
   const [colorMode, setColorMode] = useState([]);
   const [idColor, setIdColor] =useState('');
-  const [loading, setLoading] = useState(true); // Nuevo estado de carga
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getColorMode();
@@ -26,7 +26,7 @@ export const DarkModeProvider = ({ children }) => {
 
   useEffect(() => {
     console.log('colorMode actualizado:', colorMode);
-    // Una vez que los datos de Firebase se obtienen y actualizan colorMode, establecer el valor de darkMode
+ 
     if (colorMode.length > 0) {
       setDarkMode(colorMode[0].color);
     }
@@ -58,7 +58,6 @@ export const DarkModeProvider = ({ children }) => {
       /*  */
       setColorMode(dataColors);
       setIdColor(dataColors[0].id)
-      /* setDarkMode(dataColors[0].color); */
       console.log('getColorMode: colorMode ',colorMode ,'dataColors ',dataColors);
     } catch (error) {
       console.log('No se puede cargar:', error);

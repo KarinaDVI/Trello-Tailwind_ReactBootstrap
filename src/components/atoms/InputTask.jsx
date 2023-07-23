@@ -31,7 +31,7 @@ export default function InputTask({ idc, setIdc, addCard, textoVar,
     <Form>
       <Form.Group className="mb-3" controlId="formControlTextarea">
         {/* Aqui tomo el texto del input */}
-        <Form.Control className="rounded w-60 text-sm break-words" as="textarea" placeholder='Introduzca un titulo para esta tarjeta' rows={2} ref={inputRef} onChange={handleTextoChange}/>
+        <Form.Control className="rounded w-60 text-sm text-gray-600 break-words" as="textarea" placeholder='Introduzca un titulo para esta tarjeta' rows={2} ref={inputRef} onChange={handleTextoChange}/>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check className="text-sm ml-2" type="checkbox" label=" Prioritario" checked={isChecked} onChange={(e) => {e.preventDefault, setIsChecked(e.target.checked),setPriority(e.target.checked)}}/>

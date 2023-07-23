@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 
 
 export default function InputTablero({ tableroId, userId, titleTablero,
-  setTitleTablero, handleAddTablero, cancelTablero}) {
+  setTitleTablero, handleAddTablero, cancelTablero, classVar}) {
 
  const inputRef2= useRef(null);
 
@@ -19,7 +19,7 @@ export default function InputTablero({ tableroId, userId, titleTablero,
 
   return (
     <div className="px-4 w-fit rounded-md">
-    <Form className=" p-2 bg-blue-300/50 rounded-md rounded-md">
+    <Form className={`p-2 ${classVar} rounded-md rounded-md`} >
       <Form.Group className="mb-3" controlId="formControlTextarea">
         {/* Aqui tomo el texto del input */}
         <Form.Control className="rounded w-60 text-sm break-words" as="textarea" placeholder='Introduzca un titulo para este tablero' rows={2} ref={inputRef2} onChange={handleTextoChange}/>
