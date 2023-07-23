@@ -5,7 +5,7 @@ import List from './components/List';
 import Register from './components/Register';
 import { AuthContextProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-import UserPanel from './components/userPanel';
+import UserPanel from './components/UserPanel';
 import { DarkModeProvider } from './components/utils/DarkModeContext';
 function App() {
  
