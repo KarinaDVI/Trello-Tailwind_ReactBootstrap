@@ -22,7 +22,7 @@ export default function InputTablero({ tableroId, userId, titleTablero,
     <Form className={`p-2 ${classVar} rounded-md rounded-md`} >
       <Form.Group className="mb-3" controlId="formControlTextarea">
         {/* Aqui tomo el texto del input */}
-        <Form.Control className="rounded w-60 text-sm break-words" as="textarea" placeholder='Introduzca un titulo para este tablero' rows={2} ref={inputRef2} onChange={handleTextoChange}/>
+        <Form.Control className="rounded w-60 text-gray-600 text-sm break-words" as="textarea" placeholder='Introduzca un titulo para este tablero' rows={2} ref={inputRef2} onChange={handleTextoChange}/>
       </Form.Group>
       <div className="inline-flex justify-content-between text-start w-100 align-items-center ">
           

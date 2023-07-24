@@ -37,6 +37,8 @@ export default App
 
 /* Cosas que faltan hacer: 
   -Implementar drag and drop de tareas.
-  -Hacer que cuando se cree un usuario se cree el colorMode y que
-  el componente DarkModeContext solo actualice ese colorMode
+  -Borrado de Tableros: Utilizar una función 
+  que borre el tablero y llame al borrado en cascada 
+  de listas para borrar las tareas .. COpiado borrado de
+  listas en UserPanel para ver el borrado  
   */

@@ -98,7 +98,7 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
   
   return (
 
-      <div className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mr-3 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
+      <div className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mx-1 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
 
         <div className="flex justify-between pt-1">
           { !modify?
@@ -136,7 +136,7 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
               idc={task.id}
               drag={DragAndDrop.drag}
               confirmDelete={() => confirmDelete(task.id)}
-              background={task.prioridad ? "bg-red-400" : `${darkMode?'bg-gray-700 text-gray-400':'bg-white text-black'}`}
+              background={task.prioridad ? "bg-red-400" : `${darkMode?'bg-gray-700 text-gray-400':'bg-white text-black'} hover:bg-gray-400/25`}
               border={`${darkMode?'border-b border-gray-500 cursor-pointer hover:bg-gray-600':'border-b border-grey cursor-pointer hover:bg-grey-lighter'}`}
             />
           );
@@ -155,7 +155,7 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
               />
         ) : (
           <a href="#" onClick={newTask}>
-            <p className={`mt-3 ${darkMode ? 'text-slate-50' :'text-grey-dark'} text-sm`}>+Añada una tarjeta...</p>
+            <p className={`mt-3 ${darkMode ? 'text-slate-50' :'text-grey-dark'} rounded-lg p-1 text-sm hover:bg-gray-600/50`}>+Añada una tarjeta...</p>
           </a>
         )}
       </div>

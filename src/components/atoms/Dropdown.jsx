@@ -9,7 +9,7 @@ export default function Dropdown({textvar,classvar, execOnClick, idl, confirmMod
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className={`${classvar} font-sm text-underlined hidden md:flex items-center underline`}
+        <Menu.Button className={`${classvar} font-sm text-underlined items-center underline`}
         >
         <svg className={classvar} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 10a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4zm7 0a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4zm7 0a1.999 1.999 0 1 0 0 4 1.999 1.999 0 1 0 0-4z"/>
         </svg>{textvar}
@@ -43,20 +43,21 @@ export default function Dropdown({textvar,classvar, execOnClick, idl, confirmMod
                 </a>
             )}
             </Menu.Item>
-            {/* <Menu.Item 
-            onClick={()=>{confirmModifyL(idl)}}>
-              {({ active }) => (
+            <Menu.Item>
+            {({ active }) => (
                 <a
-                  href="#"
-                  className={classNames(
+                href="https://karinadvi.github.io/lista_tareas-KB/"
+                
+                className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Modificar
+                )}
+                 onClick={()=>{execOnClick(idl)}}
+                ><span className={`border-l text-sm`}>Lista de tareas javascript</span>
+                
                 </a>
-              )}
-            </Menu.Item> */}
+             )}
+            </Menu.Item>
            {/*  <Menu.Item>
               {({ active }) => (
                 <a

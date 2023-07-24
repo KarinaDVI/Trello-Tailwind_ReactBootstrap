@@ -38,7 +38,7 @@ export default function UserPanel() {
 
   useEffect(() => {
     obtenerTableros();
-  }, [userId]);
+  }, [userId, showTablero]);
 
   const cancelTablero = () => {
     setShowInputTablero(false);
@@ -53,10 +53,10 @@ export default function UserPanel() {
     /* console.log("Tablero id: " + id) */
   };
 
-  const quitTablero = async (id) => {
+ /*  const quitTablero = async (id) => {
     const tableroDoc = doc(db, 'Trello2', id);
     await deleteDoc(tableroDoc);
-  };
+  }; */
 
   const errorOpTablero = (titlep, textp) =>{
     Swal.fire({
@@ -79,23 +79,65 @@ export default function UserPanel() {
     }
   };
 
-
   const handleAddTablero = () => {
     addTablero(titleTablero);
     setTitleTablero('');
     setShowInputTablero(false);
   };
 
+  /* Para borrar el tablero: */
+
+  //Borrar la lista y todas sus tareas asociadas
+  const quitList = async (id) => {
+    try {
+      const listDocRef = doc(db, "Listas", id);
+      const tasksCollectionRef = collection(db, "Tareas");
+      const querySnapshot = await getDocs(query(tasksCollectionRef, where("lista", "==", id)));
+  
+      const deleteTasks = querySnapshot.docs.map(async (taskDoc) => {
+        await deleteDoc(taskDoc.ref);
+      });
+  
+      await Promise.all(deleteTasks);
+      await deleteDoc(listDocRef);
+      // Optionally, you can call getLists() here to update the UI after deletion.
+      // getLists();
+    } catch (error) {
+      // Handle any potential errors here
+      console.error("Error while deleting the list and tasks:", error);
+    }
+  };
+
+  const quitTablero = async (tabId) => {
+
+    const trelloDocRef = doc(db, "Trello", tabId);
+    const listsCollectionRef = collection(db, "Listas");
+    const querySnapshot = await getDocs(
+      query(listsCollectionRef, where("trello", "==", tabId))
+    );
+    const deleteLists = querySnapshot.docs.map(async (listDoc) => {
+      await quitList(listDoc.id);
+    });
+    await Promise.all(deleteLists)
+    .then(deleteDoc(trelloDocRef))
+    .then(obtenerTableros());
+
+    setSelectedTablero('');
+    setShowTablero(false);
+    
+  };
+  /*  */
+
   return userId ? (
     <div className={`${darkMode ? 'bg-gray-900 w-screen h-screen font-sans' : 'bg-blue w-screen h-screen font-sans'}`}>
       <Header />
-        <div className="md:inline-flex my-5">
+        <div className="md:inline-flex my-5 mx-4">
         
       {tablero.map((tablerox) => (
       <div className="d-flex my-5 border-white" style={{marginTop:"5%"}}key={tablerox.id}>
         <Card className={`d-flex mx-2 ${darkColors} rounded-md px-10 py-3`} >
           <Card.Header className="text-lg text-center text-gray-100 py-5">{tablerox.Titulo}</Card.Header>
-          <Card.Body className="flex space-x-4 text-center">
+          <Card.Body className="flex space-x-4 text-center justify-center">
             <Button
               className="text-gray-100 bg-blue-600/50 hover:opacity-75 rounded-md p-2 word-break"
               onClick={() => handleShowTablero(tablerox.id)}
@@ -113,7 +155,7 @@ export default function UserPanel() {
       ))}
       
      </div>
-     <div className="d-block pb-8">
+     <div className="d-block pb-8 mx-4">
         {showInputTablero?(
           <InputTablero
 
@@ -131,15 +173,17 @@ export default function UserPanel() {
           </Button>
         )}
      </div>
-     <div className="container-fluid justify-content-center">
-      {showTablero?(tablero.length>0? (
+     <div className={`container-fluid ${darkColors}`}>
+      {showTablero && tablero.length>0? (
+        selectedTablero!==''?
         <List 
-          tableroId={tablero.find((tablerox) => tablerox.id === selectedTablero).id}
+          tableroId={tablero.find((tablerox) => tablerox.id === selectedTablero)?.id}
           
         />
+        :<h4>Elija tablero</h4>
       ):(
-      <h2>No hay tableros..</h2>
-      )):(null)}
+      null
+      )}
       </div>
     </div>
   ) : (
