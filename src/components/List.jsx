@@ -168,8 +168,8 @@ const update = async (id)=>{
   /*  */
 
   return (
-<div className={`flex justify-center ${darkMode ? 'bg-gray-900':'bg-blue-300/50 text-gray-800'}`}>
-  <div className={`grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 max-sm:block gap-2 ${darkMode ? 'bg-slate-800' : 'bg-blue-300/10'} px-4 pb-8 pt-8 md:flex-wrap`}>
+<div className={`flex justify-center ${darkMode ? 'bg-gray-900':'bg-blue text-gray-800'}`}>
+  <div className={`grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 max-sm:block gap-2 ${darkMode ? 'bg-slate-800' : 'bg-blue-300/50'} px-4 pb-8 pt-8 md:flex-wrap`}>
       {lists.map((list) => (
         <Frame
           key={list.id}
