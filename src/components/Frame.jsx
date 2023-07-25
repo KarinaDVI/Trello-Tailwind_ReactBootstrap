@@ -79,7 +79,7 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
     
   // Actualizar el estado `tasks` solo con las tareas de la lista actual
   setTasks(tasksInCurrentList);
-  getTasks() 
+ /*  getTasks()  */
 };
 
   /* Actualiza valores */
