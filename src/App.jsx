@@ -7,13 +7,18 @@ import { AuthContextProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import UserPanel from './components/UserPanel';
 import { DarkModeProvider } from './components/utils/DarkModeContext';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
+
 function App() {
  
   return (
     <div>
       <BrowserRouter>
       <AuthContextProvider>
-   <DarkModeProvider> 
+   <DarkModeProvider>
+    <DndProvider backend = {HTML5Backend}>
         <Routes>
          <Route path='/' element={<HomeLogin/> }/>
          <Route path='/home/:userId' element={
@@ -25,6 +30,7 @@ function App() {
          </ProtectedRoute>} />
           <Route path='/register' element={<Register/> }/>
       </Routes>
+      </DndProvider>
       </DarkModeProvider>
       </AuthContextProvider>
     </BrowserRouter>

@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import TaskFrame from '../molecule/TaskFrame';
+import Task from '../atoms/Task';
 import DragAndDrop from '../utils/DragAndDrop';
 
 export default function InputList({ idl, setIdl, titleList,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Frame.css";
-import TaskFrame from "./molecule/TaskFrame";
+import Task from "./atoms/Task";
 import DragAndDrop from "./utils/DragAndDrop";
 import InputTask from "./atoms/InputTask";
 import Dropdown from "./atoms/Dropdown";
@@ -129,10 +129,10 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
         {tasks.map((task) => {
         if (task.lista === idl) {
           return (
-            <TaskFrame
+            <Task
             className={`${darkMode?'text-gray-100 hover:text-slate-50':'text-black'}`}
               key={task.id}
-              texto={task.Descripcion}
+              textoVar={task.Descripcion}
               idc={task.id}
               drag={DragAndDrop.drag}
               confirmDelete={() => confirmDelete(task.id)}
