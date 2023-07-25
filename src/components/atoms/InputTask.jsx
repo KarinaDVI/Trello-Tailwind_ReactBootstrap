@@ -9,7 +9,9 @@ import DragAndDrop from '../utils/DragAndDrop';
 
 
 export default function InputTask({ idc, setIdc, addCard, textoVar,
-  setTextoVar,handleAddCard, cancelTask, setPriority}) {
+                                    setTextoVar,handleAddCard, 
+                                    cancelTask, setPriority
+                                  }) {
 
  const [isChecked, setIsChecked] = useState(false);
  const inputRef= useRef(null);

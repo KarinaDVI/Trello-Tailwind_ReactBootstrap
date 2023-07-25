@@ -1,20 +1,28 @@
 import React, {useState} from "react";
+import { useDrag } from "react-dnd";
+import { ItemTypes } from "../utils/DragandDropTypes";
 
-export default function Task({ drag, textoVar, 
+export default function Task({  textoVar, 
                                idc, confirmDelete, 
                                background, border
                             }) {
 
 
-  /* const handleClick =()=>{
-    confirmDelete(idc);
-  } */
+  // Definir la tarea que se arrastra
+  const [{ isDragging }, drag] = useDrag({
+    type: ItemTypes.TASK, // Especificar el tip de contenido que arrastra
+    item: { idc, textoVar }, // Los datos que se pasan al arrastrar
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
   
   return (
-    <div className="text-sm mt-2" key={idc}>
+    <div className={`text-sm mt-2 `}>
       <div
-          className={`flex justify-between ${background} p-2 rounded mt-1 ${border}`}
-          draggable={true} key={idc}
+          ref={drag}  draggable={true}
+          className={`flex justify-between ${background} p-2 rounded mt-1 ${border} ${isDragging ? 'dragging' : ''}`}
+          key={idc}
       >
         <p className="break-all">{textoVar}</p>
         <a href="#" onClick={()=>{confirmDelete(idc)}}>X</a>

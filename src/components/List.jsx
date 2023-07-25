@@ -12,6 +12,7 @@ import { db } from "../assets/firebaseConfig/firebase";
 import Swal from 'sweetalert2';
 import { useDarkMode } from './utils/DarkModeContext';
 
+
 export default function List({tableroId}) {
   const {darkMode} = useDarkMode();
   const [idl, setIdl] = useState(0);
@@ -21,6 +22,7 @@ export default function List({tableroId}) {
   const [modify, setModify] = useState(false);
   const [valor, setValor]=useState('')
   const ListsCollection = collection(db, "Listas");
+  const [change, setChange]=useState(true);
 
   const handleAddList = (idl) => {
     if(modify){
@@ -148,7 +150,7 @@ const update = async (id)=>{
   };
 
   /* Confirmar modificar listas */
-  const confirmModifyL = (idl) => {
+  /* const confirmModifyL = (idl) => {
     Swal.fire({
       title: "Deseas Modificar la lista?",
       text: "Presiona cancel para evitarlo",
@@ -163,7 +165,19 @@ const update = async (id)=>{
         Swal.fire("Modificado!", "Se modificó la lista.", "success");
       }
     });
+  }; */
+
+  const confirmModifyL = async (idl) => {
+    try {
+      await update(idl);
+      alertaGuardado();
+      getLists();
+    } catch (error) {
+      console.error('Error updating list:', error);
+      noEncontrado();
+    }
   };
+  
 
   /*  */
 
@@ -175,9 +189,9 @@ const update = async (id)=>{
           key={list.id}
           titleList={list.Titulo}
           idl={list.id}
-          drag={DragAndDrop.drag}
           confirmDeleteL={() => confirmDeleteL(list.id)}
           confirmModifyL={() => confirmModifyL(list.id)}
+          updateList = {() => update(idl)}
           setIdl={setIdl}
           handleAddList={handleAddList}
           setTitleList={setTitleList}

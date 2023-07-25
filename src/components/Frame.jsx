@@ -6,7 +6,7 @@ import InputTask from "./atoms/InputTask";
 import Dropdown from "./atoms/Dropdown";
 /* Firebase imports */
 import {useNavigate} from 'react-router-dom';
-import {collection, getDocs, getDoc, deleteDoc, doc} from 'firebase/firestore';
+import {collection, getDocs, getDoc, updateDoc, deleteDoc, doc} from 'firebase/firestore';
 import {addDoc} from 'firebase/firestore';
 import { db } from "../assets/firebaseConfig/firebase";
 import {async} from '@firebase/util';
@@ -14,8 +14,10 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import InputMList from './atoms/InputMList';
 import { useDarkMode } from './utils/DarkModeContext';
+import { useDrop } from "react-dnd";
+import { ItemTypes } from "./utils/DragandDropTypes";
 
-const MySwal = withReactContent(Swal);
+
 
 /*  */
 
@@ -30,23 +32,64 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
   const [textoVar, setTextoVar] = useState('');
   const [priority, setPriority] = useState(false);
   const {darkMode} = useDarkMode();
+  const MySwal = withReactContent(Swal);
+  const TaskCollection = collection(db, "Tareas");
+
+  /* Drag and drop */
+   
+  const [, drop] = useDrop({
+    accept: ItemTypes.TASK,
+    drop: (item) => {
+      console.log('Item dropped:', item);
+      console.log('Dropped into list idl:', idl);
   
-  const navigate = useNavigate();
+      const updatedTasks = tasks.map((task) =>
+        task.id === item.idc ? { ...task, lista: idl } : task
+      );
+      setTasks(updatedTasks);
+      // Update the task's lista field in Firebase
+      updateTaskListaInFirebase(item.idc, idl)
+    },
+  });
+  
+  const updateTaskListaInFirebase = async (taskId, newListId) => {
+    const taskRef = doc(db, 'Tareas', taskId);
+    await updateDoc(taskRef, { lista: newListId })
+    await getTasks()
+  };
 
- const TaskCollection = collection(db, "Tareas");
+  /*  */
 
-    /* Mostrar firebase */
-    const getTasks = async() => {
-      const data = await getDocs(TaskCollection);
-      setTasks(
-          data.docs.map((docc)=>({...docc.data(), id:docc.id}))
-      )
-  }
+ 
+
+  /* getTasks original */
+ /*  const getTasks = async() => {
+    const data = await getDocs(TaskCollection);
+    setTasks(
+        data.docs.map((docc)=>({...docc.data(), id:docc.id}))
+    )
+  } */
+
+/* getTasks con filtro por idl */
+  const getTasks = async () => {
+  const data = await getDocs(TaskCollection);
+  const allTasks = data.docs.map((docc) => ({ ...docc.data(), id: docc.id }));
+  // Filtrar las tareas que pertenecen a la lista actual (con el id `idl`)
+  const tasksInCurrentList = allTasks.filter((task) => task.lista === idl);
+    
+  // Actualizar el estado `tasks` solo con las tareas de la lista actual
+  setTasks(tasksInCurrentList);
+/*   getTasks() */
+};
+
   /* Actualiza valores */
-    useEffect(()=>{
-      getTasks();
-  }, [])
-
+  useEffect(() => {
+    getTasks();
+  }, [idl]);
+  
+  useEffect(() => {
+    getTasks();
+  }, [idc]); 
   /*  */
 
   const newTask = () => {
@@ -98,7 +141,7 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
   
   return (
 
-      <div className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mx-1 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
+      <div ref={drop} className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mx-1 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
 
         <div className="flex justify-between pt-1">
           { !modify?
@@ -134,10 +177,10 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
               key={task.id}
               textoVar={task.Descripcion}
               idc={task.id}
-              drag={DragAndDrop.drag}
               confirmDelete={() => confirmDelete(task.id)}
               background={task.prioridad ? "bg-red-400" : `${darkMode?'bg-gray-700 text-gray-400':'bg-white text-black'} hover:bg-gray-400/25`}
               border={`${darkMode?'border-b border-gray-500 cursor-pointer hover:bg-gray-600':'border-b border-grey cursor-pointer hover:bg-grey-lighter'}`}
+            
             />
           );
         }
