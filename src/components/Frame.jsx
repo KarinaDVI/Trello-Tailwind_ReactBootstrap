@@ -3,7 +3,7 @@ import "./Frame.css";
 import Task from "./atoms/Task";
 import DragAndDrop from "./utils/DragAndDrop";
 import InputTask from "./atoms/InputTask";
-import Dropdown from "./atoms/Dropdown";
+import DropdownF from "./atoms/DropdownF";
 /* Firebase imports */
 import {useNavigate} from 'react-router-dom';
 import {collection, getDocs, getDoc, updateDoc, deleteDoc, doc} from 'firebase/firestore';
@@ -162,7 +162,7 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
             />)
 
           }
-        <Dropdown
+        <DropdownF
           textvar=""
           classvar="h-4 fill-current text-grey-dark cursor-pointer"
           execOnClick={() => confirmDeleteL(idl)} // Pass the handleDeleteList function as a prop

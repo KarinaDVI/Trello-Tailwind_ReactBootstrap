@@ -27,7 +27,7 @@ export default function Header() {
      
       Swal.fire({
         title: 'Realizado con React Bootstrap y Tailwind',
-        text: "(Si, ya sé que no se podía...)",
+        text: "(Si, ya sé que no se podía... Otra cosa: El drag and drop tiene más inspiración poética que funcionalidad así que úselo con precaución)",
         icon: 'info',
         showClass: {
           popup: 'animate__animated animate__fadeInDown'
@@ -80,7 +80,7 @@ export default function Header() {
                         <li><span className="font-bold text-lg px-2">☆</span></li>
                         <li><span className={`border-l ${blueLight} px-2 text-sm`}>Business Name</span> <span className={`rounded-lg ${blueLight} text-xs px-2 py-1`}>Free</span></li>
                         <li><span className={`border-l ${blueLight} px-2 text-sm ml-2`}>Team Visible</span></li>
-                        <li><a href="https://karinadvi.github.io/lista_tareas-KB/"><span className={`border-l ${blueLight} px-2 text-sm ml-2`}>Lista de tareas javascript</span></a></li>
+               {/*          <li><a href="https://karinadvi.github.io/lista_tareas-KB/"><span className={`border-l ${blueLight} px-2 text-sm ml-2`}>Lista de tareas javascript</span></a></li> */}
                     </ul>
                 </div>
                 
@@ -88,6 +88,9 @@ export default function Header() {
                           classvar={`h-4 fill-current text-gray-100 cursor-pointer mr-2`}
                           execOnClick={alertInfo}
                           textDrop="Info"
+                          textDrop2="Lista de Tareas Javascript"
+                          href ="https://karinadvi.github.io/lista_tareas-KB/"
+                          execOnClick2={""}
 
                 />
     

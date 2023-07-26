@@ -5,11 +5,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Dropdown({textvar,classvar, 
-                                  execOnClick,
-                                  execOnClick2, idl, 
-                                  textDrop,textDrop2, 
-                                  href
+export default function DropdownF({textvar,classvar, 
+                                  execOnClick, idl, 
+                                  textDrop, href
                                 }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -48,21 +46,7 @@ export default function Dropdown({textvar,classvar,
                 </a>
             )}
             </Menu.Item>
-            <Menu.Item>
-            {({ active }) => (
-                <a
-                href={href}
-                
-                className={classNames(
-                    active? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                )}
-                 onClick={()=>{execOnClick2(idl)}}
-                ><span className={`border-l text-sm`}>{textDrop2}</span>
-                
-                </a>
-             )}
-            </Menu.Item>
+           
            {/*  <Menu.Item>
               {({ active }) => (
                 <a
