@@ -4,7 +4,8 @@ import { ItemTypes } from "../utils/DragandDropTypes";
 
 export default function Task({  textoVar, 
                                idc, confirmDelete, 
-                               background, border
+                               background, border,
+                               setUpdte
                             }) {
 
 
@@ -16,11 +17,14 @@ export default function Task({  textoVar,
       isDragging: monitor.isDragging(),
     }),
   });
+  const handleOnDragStart=()=>{
+    setUpdte(true)
+  }
   
   return (
     <div className={`text-sm mt-2 `}>
       <div
-          ref={drag}  draggable={true}
+          ref={drag}  draggable={true} onDragStart={handleOnDragStart}
           className={`flex justify-between ${background} p-2 rounded mt-1 ${border} ${isDragging ? 'dragging' : ''}`}
           key={idc}
       >

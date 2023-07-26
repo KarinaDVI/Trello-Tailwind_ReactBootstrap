@@ -129,16 +129,20 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
 
     /* e.target.classList.add("hidden") */
     setUpdte(false)
-     getTasks(); 
+     /* getTasks();  */
   };
   const handleOnDropCapture= (e) =>{
     setUpdte(true)
-    getTasks(); 
+  /*   getTasks();  */
   }
   
   return (
 
-      <div ref={drop} onDropCapture={handleOnDropCapture} onDragStartCapture={handleOnDragCapture} className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mx-1 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
+      <div ref={drop} 
+          onDropCapture={handleOnDropCapture} 
+          onDragStartCapture={handleOnDragCapture}
+          onDragEndCapture={handleOnDragCapture} 
+          className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mx-1 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
 
         <div className="flex justify-between pt-1">
           { !modify?
@@ -177,7 +181,7 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
               confirmDelete={() => confirmDelete(task.id)}
               background={task.prioridad ? "bg-red-400" : `${darkMode?'bg-gray-700 text-gray-400':'bg-white text-black'} hover:bg-gray-400/25`}
               border={`${darkMode?'border-b border-gray-500 cursor-pointer hover:bg-gray-600':'border-b border-grey cursor-pointer hover:bg-grey-lighter'}`}
-            
+              setUpdte={setUpdte}
             />
           );
         }
