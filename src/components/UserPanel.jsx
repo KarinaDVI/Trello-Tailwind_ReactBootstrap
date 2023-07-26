@@ -32,6 +32,7 @@ export default function UserPanel() {
       }));
       setTablero(datosTableros);
     } catch (error) {
+      !userId?null:
       errorOpTablero('No se puede cargar el tablero', 'Si está seguro que existe intente nuevamente')
     }
   };
