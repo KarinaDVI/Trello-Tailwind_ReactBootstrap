@@ -22,7 +22,7 @@ import { ItemTypes } from "./utils/DragandDropTypes";
 /*  */
 
 export default function Frame({titleList, idl, setIdl, confirmDeleteL, 
-                              confirmModifyL, handleAddList, 
+                              handleAddList, 
                               setTitleList, cancelList, valor, 
                               modify, setModify, setValor
                               }) {
@@ -34,63 +34,50 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
   const {darkMode} = useDarkMode();
   const MySwal = withReactContent(Swal);
   const TaskCollection = collection(db, "Tareas");
+  const [updte, setUpdte] = useState(null)
 
   /* Drag and drop */
    
   const [, drop] = useDrop({
     accept: ItemTypes.TASK,
     drop: (item) => {
-      console.log('Item dropped:', item);
-      console.log('Dropped into list idl:', idl);
-  
       const updatedTasks = tasks.map((task) =>
         task.id === item.idc ? { ...task, lista: idl } : task
       );
       setTasks(updatedTasks);
-      // Update the task's lista field in Firebase
-      updateTaskListaInFirebase(item.idc, idl)
+      updateTaskListaInFirebase(item.idc, idl); // Actualizar el campo lista en Firebase
     },
   });
-  
+
+  // Función para actualizar el campo lista en Firebase
   const updateTaskListaInFirebase = async (taskId, newListId) => {
-    const taskRef = doc(db, 'Tareas', taskId);
-    await updateDoc(taskRef, { lista: newListId })
-    await getTasks()
+    const taskRef = doc(db, "Tareas", taskId);
+    await updateDoc(taskRef, { lista: newListId });
   };
 
-  /*  */
-
- 
-
-  /* getTasks original */
- /*  const getTasks = async() => {
-    const data = await getDocs(TaskCollection);
-    setTasks(
-        data.docs.map((docc)=>({...docc.data(), id:docc.id}))
-    )
-  } */
-
-/* getTasks con filtro por idl */
+  /* getTasks con filtro por idl */
   const getTasks = async () => {
-  const data = await getDocs(TaskCollection);
-  const allTasks = data.docs.map((docc) => ({ ...docc.data(), id: docc.id }));
-  // Filtrar las tareas que pertenecen a la lista actual (con el id `idl`)
-  const tasksInCurrentList = allTasks.filter((task) => task.lista === idl);
-    
-  // Actualizar el estado `tasks` solo con las tareas de la lista actual
-  setTasks(tasksInCurrentList);
- /*  getTasks()  */
-};
+    const data = await getDocs(TaskCollection);
+    const allTasks = data.docs.map((docc) => ({ ...docc.data(), id: docc.id }));
+    // Filtrar las tareas que pertenecen a la lista actual (con el id `idl`)
+    const tasksInCurrentList = allTasks.filter((task) => task.lista === idl);
 
-  /* Actualiza valores */
-  useEffect(() => {
-    getTasks();
-  }, [idl]);
+    // Actualizar el estado `tasks` solo con las tareas de la lista actual
+    setTasks(tasksInCurrentList);
+  };
+
+   useEffect(() => {
+    // Get the latest version of the `tasks` array from Firebase
+    const getTasks = async () => {
+      const data = await getDocs(TaskCollection);
+      setTasks(data.docs.map((docc) => ({ ...docc.data(), id: docc.id })));
+    };
   
-  useEffect(() => {
     getTasks();
-  }, [idc]); 
+  }, [updte]); 
+  
   /*  */
+
 
   const newTask = () => {
     setShowInput(true);
@@ -138,10 +125,20 @@ export default function Frame({titleList, idl, setIdl, confirmDeleteL,
     addCard(textoVar);
     setTextoVar('');
   };
+  const handleOnDragCapture = async(e) => {
+
+    /* e.target.classList.add("hidden") */
+    setUpdte(false)
+     getTasks(); 
+  };
+  const handleOnDropCapture= (e) =>{
+    setUpdte(true)
+    getTasks(); 
+  }
   
   return (
 
-      <div ref={drop} className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mx-1 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
+      <div ref={drop} onDropCapture={handleOnDropCapture} onDragStartCapture={handleOnDragCapture} className={`rounded ${darkMode ? 'bg-slate-500 text-slate-50' :'bg-grey-light'} flex-no-shrink w-64 p-2 mx-1 mb-8 max-h-screen my-2 overflow-y-scrool overflow-visible`} >
 
         <div className="flex justify-between pt-1">
           { !modify?

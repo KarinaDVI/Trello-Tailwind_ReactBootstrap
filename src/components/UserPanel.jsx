@@ -120,16 +120,16 @@ export default function UserPanel() {
     });
     await Promise.all(deleteLists)
     .then(deleteDoc(trelloDocRef))
-    .then(obtenerTableros());
+    .then(obtenerTableros())
 
-    setSelectedTablero('');
-    setShowTablero(false);
+    .then(setSelectedTablero(''))
+    .then(setShowTablero(false));
     
   };
   /*  */
 
   return userId ? (
-    <div className={`${darkMode ? 'bg-gray-900 w-screen h-screen font-sans' : 'bg-blue w-screen h-screen font-sans'}`}>
+    <div onClick={obtenerTableros} className={`${darkMode ? 'bg-gray-900 w-screen h-screen font-sans' : 'bg-blue w-screen h-screen font-sans'}`}>
       <Header />
         <div className="md:inline-flex my-5 mx-4">
         

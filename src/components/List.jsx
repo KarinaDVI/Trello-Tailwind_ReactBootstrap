@@ -172,11 +172,15 @@ const update = async (id)=>{
       await update(idl);
       alertaGuardado();
       getLists();
+      setModify(false);
     } catch (error) {
       console.error('Error updating list:', error);
       noEncontrado();
     }
   };
+  const handleOnDropCapture =()=>{
+    getLists();
+  }
   
 
   /*  */
