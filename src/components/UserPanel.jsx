@@ -9,6 +9,7 @@ import { UserAuth } from '../context/AuthContext';
 import List from './List';
 import { useDarkMode } from './utils/DarkModeContext';
 import Swal from 'sweetalert2';
+import OffCanvasMenu from './molecules/offCanvasMenu';
 
 export default function UserPanel() {
   const { userId, user } = UserAuth();
@@ -57,11 +58,11 @@ export default function UserPanel() {
     setShowInputTablero(true);
   }; 
 
-  const handleShowTablero = (id) => {
+/*   const handleShowTablero = (id) => {
     setShowTablero(true);
     setSelectedTablero(id)
-    /* console.log("Tablero id: " + id) */
-  };
+    
+  }; */
 
 
   const errorOpTablero = (titlep, textp) =>{
@@ -135,9 +136,26 @@ export default function UserPanel() {
   return userId ? (
     <div onClick={obtenerTableros} className={`${darkMode ? 'bg-gray-900 w-screen h-screen font-sans' : 'bg-blue w-screen h-screen font-sans'}`}>
       <Header />
-        <div className="md:inline-flex my-5 mx-4">
-        
-      {tablero.map((tablerox) => (
+      <OffCanvasMenu 
+        tablero={tablero}
+        setShowTablero={setShowTablero}
+        setSelectedTablero={setSelectedTablero}
+        selectedTablero={selectedTablero}
+        quitTablero={quitTablero}
+        showInputTablero={showInputTablero}
+        userId={userId}
+        handleAddTablero={handleAddTablero}
+        cancelTablero={cancelTablero}
+        setTitleTablero={setTitleTablero}
+        titleTablero={titleTablero}
+        tableroId={tablero.id}
+        tableroLong={tablero.length}
+        hideTablero={hideTablero}
+
+      />
+      <div className="md:inline-flex my-5 mx-4">
+      {/* {tablero.map((tablerox) => (
+      
       <div className="d-flex my-5 border-white" style={{marginTop:"5%"}}key={tablerox.id}>
         <Card className={`d-flex mx-2 ${darkColors} rounded-md px-10 py-3`} >
           <Card.Header className="text-lg text-center text-gray-100 py-5">{tablerox.Titulo}</Card.Header>
@@ -156,27 +174,27 @@ export default function UserPanel() {
           </Card.Body>
         </Card> 
         </div>
-      ))}
+      ))} */}
       
      </div>
-     <div className="d-block pb-8 mx-4">
-        {showInputTablero?(
-          <InputTablero
+      {/*  <div className="d-block pb-8 mx-4">
+            {showInputTablero?(
+              <InputTablero
 
-            userId={userId}
-            handleAddTablero={handleAddTablero}
-            cancelTablero={cancelTablero}
-            tableroId={tablero.id}
-            setTitleTablero={setTitleTablero}
-            titleTablero={titleTablero}
-            classVar={darkColors}
-          />
-        ):(
-          <Button onClick={hideTablero} className={`w-64 border-none rounded-2xl text-start ps-3 py-3 pe-8 pe-8 ${darkMode?'bg-blue-400/25 text-gray-100':'bg-blue-300/50 text-white'} hover:opacity-75  text-sm ml-2 px-10`}>
-          {tablero.length<1?("+Añada un tablero..."):("+Añada otro tablero...")}
-          </Button>
-        )}
-     </div>
+                userId={userId}
+                handleAddTablero={handleAddTablero}
+                cancelTablero={cancelTablero}
+                tableroId={tablero.id}
+                setTitleTablero={setTitleTablero}
+                titleTablero={titleTablero}
+                classVar={darkColors}
+              />
+            ):(
+              <Button onClick={hideTablero} className={`w-64 border-none rounded-2xl text-start ps-3 py-3 pe-8 pe-8 ${darkMode?'bg-blue-400/25 text-gray-100':'bg-blue-300/50 text-white'} hover:opacity-75  text-sm ml-2 px-10`}>
+              {tablero.length<1?("+Añada un tablero..."):("+Añada otro tablero...")}
+              </Button>
+            )}
+     </div> */}
      <div className={`container-fluid ${darkColors}`}>
       {showTablero && tablero.length>0? (
         selectedTablero!==''?

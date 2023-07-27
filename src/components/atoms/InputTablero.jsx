@@ -5,8 +5,10 @@ import Form from 'react-bootstrap/Form';
 
 
 
-export default function InputTablero({ tableroId, userId, titleTablero,
-  setTitleTablero, handleAddTablero, cancelTablero, classVar}) {
+export default function InputTablero({ tableroId, userId, 
+                                       titleTablero, setTitleTablero, 
+                                       handleAddTablero, cancelTablero, 
+                                       classVar}) {
 
  const inputRef2= useRef(null);
 
