@@ -18,36 +18,35 @@ export default function OffCanvasMenu({tablero,setShowTablero,
   const darkColors= darkMode?'bg-blue-700/25 text-gray-100':'bg-blue-300/50 text-gray-100'
   const [initialTouchX, setInitialTouchX] = useState(null);
   const [currentTouchX, setCurrentTouchX] = useState(null);
-
+  const [touchStartX, setTouchStartX] = useState(null);
 
   const handleTouchStart = (e) => {
-    e.preventDefault();
-    setInitialTouchX(e.touches[0].clientX);
-    setCurrentTouchX(e.touches[0].clientX);
+    const touchX = e.touches[0].clientX;
+    setTouchStartX(touchX);
   };
 
   const handleTouchMove = (e) => {
-    e.preventDefault();
-    setCurrentTouchX(e.touches[0].clientX);
+    if (!touchStartX) return;
+
+    const touchX = e.touches[0].clientX;
+    const distanceX = touchX - touchStartX;
+    const threshold = 50; // Adjust the threshold as needed
+
+    if (distanceX <= -threshold) {
+      setOpen(true);
+    } else if (distanceX >= threshold) {
+      setOpen(false);
+    }
   };
 
-  const handleTouchEnd = (e) => {
-    e.preventDefault();
-    if (initialTouchX && currentTouchX) {
-      const touchDifference = currentTouchX - initialTouchX;
-      if (touchDifference > 100) {
-        setOpen(!open);
-      }
-      // Reset touch position state after swipe
-      setInitialTouchX(null);
-      setCurrentTouchX(null);
-    }
+  const handleTouchEnd = () => {
+    setTouchStartX(null);
   };
 
   const openSlide = (e) =>{
     const mouseX = e.clientX;
       if (mouseX <= 20) {
-        setOpen(!open)
+       setOpen(true) 
   }
 }
 
