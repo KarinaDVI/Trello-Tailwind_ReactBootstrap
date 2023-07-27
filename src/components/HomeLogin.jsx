@@ -10,7 +10,10 @@ const [loginEmail, setLoginEmail] = useState("");
 const [loginPassword, setLoginPassword] = useState("");
 const navigate = useNavigate();
 const {signIn} = UserAuth();
+const {forgotPassword} = UserAuth();
 const [errorMessage, setErrorMessage] =useState('')
+const emailRef = useRef();
+
 const handleSubmit = async(e)=>{
     e.preventDefault();
     try{
@@ -23,7 +26,14 @@ const handleSubmit = async(e)=>{
         navigate('/')
     }
 }
-
+const forgotPasswordHandler = (e) => {
+  e.preventDefault();
+  const email = emailRef.current.value;
+    if (email)
+      forgotPassword(email).then(() => {
+        emailRef.value=""
+      });
+}
 
   return (
     <section className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">    
@@ -48,6 +58,7 @@ const handleSubmit = async(e)=>{
                   </label>
                   <div className="mt-2">
                     <input
+                      ref={emailRef}
                       id="email"
                       name="email"
                       type="email"
@@ -59,14 +70,16 @@ const handleSubmit = async(e)=>{
                   </div>
                 </div>
                 <div>
-                    <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Contraseña
-                    </label>
-                    {/* <div className="text-sm">
-                      <a href="#" className="text-sm font-light text-indigo-500 dark:text-gray-400">
-                        Olvidaste la contraseña?
-                      </a>
-                    </div> */}
+                  <div className='block sm:flex justify-between '>
+                      <label htmlFor="password" className="block sm:flex mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Contraseña
+                      </label>
+                      <div className="block sm:flex text-sm pb-2 sm:justify-right">
+                        <a href="#" onClick={(forgotPasswordHandler)} className="text-sm font-light text-indigo-500 dark:text-gray-400">
+                          *Olvidaste la contraseña?
+                        </a>
+                      </div>
+                    </div> 
                   <input
                       id="password"
                       name="password"
