@@ -11,7 +11,7 @@ import { useDarkMode } from './utils/DarkModeContext';
 import Swal from 'sweetalert2';
 
 export default function UserPanel() {
-  const { userId } = UserAuth();
+  const { userId, user } = UserAuth();
   const {darkMode}=useDarkMode();
   const [tablero, setTablero] = useState([]);
   const [showTablero, setShowTablero] = useState(false);
@@ -22,6 +22,11 @@ export default function UserPanel() {
   const darkColors= darkMode?'bg-blue-700/25 text-gray-100':'bg-blue-300/50 text-gray-100'
 
   const obtenerTableros = async () => {
+    if (userId === null) {
+      // Return early if userId is null
+      return;
+    }
+    if(userId!==null){
     try {
       const querySnapshot = await getDocs(
         query(tablerosRef, where('user', '==', userId))
@@ -32,20 +37,25 @@ export default function UserPanel() {
       }));
       setTablero(datosTableros);
     } catch (error) {
-      errorOpTablero('No se puede cargar el tablero', 'Si está seguro que existe intente nuevamente')
+      errorOpTablero('No se puede cargar los tableros', 'Si ha salido ignore este mensaje. Si está seguro que existen intente nuevamente')
     }
+  }
   };
 
-  useEffect(() => {
+   useEffect(() => {
+    if(user=={}||userId!==null){
     obtenerTableros();
+    }
   }, [userId, showTablero]);
+
+
 
   const cancelTablero = () => {
     setShowInputTablero(false);
   };
   const hideTablero = () => {
     setShowInputTablero(true);
-  };
+  }; 
 
   const handleShowTablero = (id) => {
     setShowTablero(true);
@@ -53,10 +63,6 @@ export default function UserPanel() {
     /* console.log("Tablero id: " + id) */
   };
 
- /*  const quitTablero = async (id) => {
-    const tableroDoc = doc(db, 'Trello2', id);
-    await deleteDoc(tableroDoc);
-  }; */
 
   const errorOpTablero = (titlep, textp) =>{
     Swal.fire({
@@ -100,11 +106,9 @@ export default function UserPanel() {
   
       await Promise.all(deleteTasks);
       await deleteDoc(listDocRef);
-      // Optionally, you can call getLists() here to update the UI after deletion.
-      // getLists();
     } catch (error) {
-      // Handle any potential errors here
-      console.error("Error while deleting the list and tasks:", error);
+  
+      console.error("Error al borrar la tarea codigo de error:", error);
     }
   };
 
