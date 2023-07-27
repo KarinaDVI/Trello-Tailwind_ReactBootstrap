@@ -46,6 +46,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
       if (mouseX <= 20) {
         setOpen(true)
   }
+}
 
 useEffect(() => {
     document.addEventListener('mousemove', openSlide);
