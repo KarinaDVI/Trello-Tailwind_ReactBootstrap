@@ -17,17 +17,28 @@ export default function OffCanvasMenu({tablero,setShowTablero,
   const [open, setOpen] = useState(true)
   const darkColors= darkMode?'bg-blue-700/25 text-gray-100':'bg-blue-300/50 text-gray-100'
 
-  const openSlide = (e) =>{
-    const mouseX = e.clientX;
-      if (mouseX <= 20) {
-        setOpen(true)
-  }
+  const openSlide = (e) => {
+    let mouseX;
+    if (e.clientX) {
+      // Mouse event
+      mouseX = e.clientX;
+    } else if (e.touches && e.touches.length > 0) {
+      // Touch event
+      mouseX = e.touches[0].clientX;
+    }
+  
+    if (mouseX <= 20) {
+      setOpen(true);
+    }
+  };
 }
 useEffect(() => {
-
     document.addEventListener('mousemove', openSlide);
+    document.addEventListener('touchstart', openSlide);
+    
     return () => {
-      document.removeEventListener('mousemove', openSlide);
+        document.removeEventListener('mousemove', openSlide);
+        document.removeEventListener('touchstart', openSlide);
     };
   }, []);
   const handleShowTablero = (id) => {
