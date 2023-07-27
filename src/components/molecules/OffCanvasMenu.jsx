@@ -30,7 +30,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
 
     const touchX = e.touches[0].clientX;
     const distanceX = touchX - touchStartX;
-    const threshold = 100; // Adjust the threshold as needed
+    const threshold = 50; // Adjust the threshold as needed
 
     if (distanceX <= -threshold) {
       setOpen(true);
@@ -105,7 +105,7 @@ useEffect(() => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="absolute right-0 top-0 -mr-8 flex pr-2 pt-4 sm:-mr-10 sm:pr-4">
+                <div className="absolute right-15 top-0 -mr-8 flex pr-2 pt-4 sm:-mr-10 sm:pr-4">
                   <button
                     type="button"
                     className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
