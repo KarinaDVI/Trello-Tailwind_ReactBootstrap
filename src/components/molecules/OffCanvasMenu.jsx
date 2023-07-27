@@ -30,7 +30,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
 
     const touchX = e.touches[0].clientX;
     const distanceX = touchX - touchStartX;
-    const threshold = 50; // Adjust the threshold as needed
+    const threshold = 100; // Adjust the threshold as needed
 
     if (distanceX <= -threshold) {
       setOpen(true);
