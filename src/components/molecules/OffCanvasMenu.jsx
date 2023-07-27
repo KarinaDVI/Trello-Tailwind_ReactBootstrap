@@ -16,29 +16,47 @@ export default function OffCanvasMenu({tablero,setShowTablero,
   const {darkMode}= useDarkMode();
   const [open, setOpen] = useState(true)
   const darkColors= darkMode?'bg-blue-700/25 text-gray-100':'bg-blue-300/50 text-gray-100'
+  const [initialTouchX, setInitialTouchX] = useState(null);
+  const [currentTouchX, setCurrentTouchX] = useState(null);
 
-  const openSlide = (e) => {
-    let mouseX;
-    if (e.clientX) {
-      // Mouse event
-      mouseX = e.clientX;
-    } else if (e.touches && e.touches.length > 0) {
-      // Touch event
-      mouseX = e.touches[0].clientX;
-    }
-  
-    if (mouseX <= 20) {
-      setOpen(true);
+
+  const handleTouchStart = (e) => {
+    setInitialTouchX(e.touches[0].clientX);
+    setCurrentTouchX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setCurrentTouchX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (initialTouchX && currentTouchX) {
+      const touchDifference = currentTouchX - initialTouchX;
+      if (touchDifference > 100) {
+        setOpen(false);
+      }
+      // Reset touch position state after swipe
+      setInitialTouchX(null);
+      setCurrentTouchX(null);
     }
   };
 
+  const openSlide = (e) =>{
+    const mouseX = e.clientX;
+      if (mouseX <= 20) {
+        setOpen(true)
+  }
+
 useEffect(() => {
     document.addEventListener('mousemove', openSlide);
-    document.addEventListener('touchstart', openSlide);
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
     
     return () => {
-        document.removeEventListener('mousemove', openSlide);
-        document.removeEventListener('touchstart', openSlide);
+        document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
   
