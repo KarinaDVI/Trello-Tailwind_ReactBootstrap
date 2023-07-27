@@ -33,7 +33,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
     if (initialTouchX && currentTouchX) {
       const touchDifference = currentTouchX - initialTouchX;
       if (touchDifference > 100) {
-        setOpen(false);
+        setOpen(!open);
       }
       // Reset touch position state after swipe
       setInitialTouchX(null);
@@ -44,7 +44,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
   const openSlide = (e) =>{
     const mouseX = e.clientX;
       if (mouseX <= 20) {
-        setOpen(true)
+        setOpen(!open)
   }
 }
 
