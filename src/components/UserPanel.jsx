@@ -9,7 +9,7 @@ import { UserAuth } from '../context/AuthContext';
 import List from './List';
 import { useDarkMode } from './utils/DarkModeContext';
 import Swal from 'sweetalert2';
-import OffCanvasMenu from './molecules/offCanvasMenu';
+import OffCanvasMenu from './molecules/OffCanvasMenu';
 
 export default function UserPanel() {
   const { userId, user } = UserAuth();
