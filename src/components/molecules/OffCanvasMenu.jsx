@@ -96,7 +96,7 @@ useEffect(() => {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
+            <Dialog.Panel className="pointer-events-auto relative w-screen max-w-md md:max-w-xs">
               <Transition.Child
                 as={Fragment}
                 enter="ease-in-out duration-500"
@@ -131,7 +131,7 @@ useEffect(() => {
                         <Card.Header className="text-lg text-center text-gray-100 py-5">{tablerox.Titulo}</Card.Header>
                         <Card.Body className="flex space-x-4 text-center justify-center">
                             <Button
-                            className="absolute top-0 left-0 mt-4 ml-4 rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+                            className="text-gray-100 bg-blue-600/50 hover:opacity-75 rounded-md p-2 word-break"
                             onClick={() => handleShowTablero(tablerox.id)}
                             >
                             Mostrar Tablero
