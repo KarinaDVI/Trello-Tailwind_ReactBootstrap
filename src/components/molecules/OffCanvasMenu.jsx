@@ -31,7 +31,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
       setOpen(true);
     }
   };
-}
+
 useEffect(() => {
     document.addEventListener('mousemove', openSlide);
     document.addEventListener('touchstart', openSlide);
@@ -41,6 +41,7 @@ useEffect(() => {
         document.removeEventListener('touchstart', openSlide);
     };
   }, []);
+  
   const handleShowTablero = (id) => {
     setShowTablero(true);
     setSelectedTablero(id)

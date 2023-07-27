@@ -4,7 +4,6 @@ import { collection, getDocs, deleteDoc, doc, query, where } from 'firebase/fire
 import { addDoc } from 'firebase/firestore';
 import { db } from '../assets/firebaseConfig/firebase';
 import Header from './Header';
-import InputTablero from './atoms/InputTablero';
 import { UserAuth } from '../context/AuthContext';
 import List from './List';
 import { useDarkMode } from './utils/DarkModeContext';
