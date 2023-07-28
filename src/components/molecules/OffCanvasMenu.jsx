@@ -15,61 +15,33 @@ export default function OffCanvasMenu({tablero,setShowTablero,
                                       tableroLong}) {
   const {darkMode}= useDarkMode();
   const [open, setOpen] = useState(true)
+  const [posx, setPosx] = useState(0);
   const darkColors= darkMode?'bg-blue-700/25 text-gray-100':'bg-blue-300/50 text-gray-100'
-  const [initialTouchX, setInitialTouchX] = useState(null);
-  const [currentTouchX, setCurrentTouchX] = useState(null);
-  const [touchStartX, setTouchStartX] = useState(null);
 
-  const handleTouchStart = (e) => {
-    const touchX = e.touches[0].clientX;
-    setTouchStartX(touchX);
-  };
+  const handleOpen = ()=>{
+    setOpen(!open)
+    open==false?setPosx(12):setPosx(0)
 
-  const handleTouchMove = (e) => {
-    if (!touchStartX) return;
-
-    const touchX = e.touches[0].clientX;
-    const distanceX = touchX - touchStartX;
-    const threshold = 100; // Adjust the threshold as needed
-
-    if (distanceX <= -threshold) {
-      setOpen(true);
-    } else if (distanceX >= threshold) {
-      setOpen(false);
-    }
-  };
-
-  const handleTouchEnd = () => {
-    setTouchStartX(null);
-  };
-
-  const openSlide = (e) =>{
-    const mouseX = e.clientX;
-      if (mouseX <= 20) {
-       setOpen(true) 
   }
-}
-
-useEffect(() => {
-    document.addEventListener('mousemove', openSlide);
-    document.addEventListener('touchstart', handleTouchStart);
-    document.addEventListener('touchmove', handleTouchMove);
-    document.addEventListener('touchend', handleTouchEnd);
-    
-    return () => {
-        document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, []);
   
-  const handleShowTablero = (id) => {
-    setShowTablero(true);
-    setSelectedTablero(id)
-    
-  };
-
   return (
+    <>
+    
+          <div className={`mr-8 absolute left-${posx} top-80 pr-2 pt-4 sm:-mr-10 sm:pr-4`}>
+            <button
+              type="button"
+              className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white opacity-100"
+              onClick={handleOpen} 
+              hidden={open}
+            >
+              <span className="sr-only">Close panel</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+              </svg>
+
+            </button>
+          </div>
+     
     <Transition.Root show={open} as={Fragment}>
     <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={() => setOpen(false)}>
       <div className="absolute inset-0 overflow-hidden">
@@ -99,20 +71,24 @@ useEffect(() => {
               <Transition.Child
                 as={Fragment}
                 enter="ease-in-out duration-500"
-                enterFrom="opacity-0"
+                enterFrom="opacity-100"
                 enterTo="opacity-100"
                 leave="ease-in-out duration-500"
                 leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+                leaveTo="opacity-100"
               >
-                <div className="absolute right-12 top-0 -mr-8 flex pr-2 pt-4 sm:-mr-10 sm:pr-4">
+                {/* <div className={`flex justify-end items-center  -mr-8 pr-2 pt-4 sm:-mr-10 sm:pr-4`}> */}
+                <div className= {`absolute right-${posx} top-80 flex items-center pr-2 pt-4 sm:-mr-10 sm:pr-4 z-50`}>
                   <button
                     type="button"
-                    className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                    onClick={() => setOpen(false)}
+                    className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white opacity-100"
+                    onClick={handleOpen}
                   >
                     <span className="sr-only">Close panel</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+                    </svg>
+
                   </button>
                 </div>
               </Transition.Child>
@@ -171,5 +147,7 @@ useEffect(() => {
       </div>
     </Dialog>
   </Transition.Root>
+  </>
 );
+
 }

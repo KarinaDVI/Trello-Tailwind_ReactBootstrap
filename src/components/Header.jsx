@@ -17,6 +17,7 @@ export default function Header() {
     const handleLogout = async () =>{
        try{
         await logout()
+        
         navigate('/')
         console.log("Saliste!")
        } catch(e){
