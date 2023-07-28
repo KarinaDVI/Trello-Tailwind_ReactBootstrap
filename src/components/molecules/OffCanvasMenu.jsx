@@ -27,7 +27,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
   return (
     <>
     
-          <div className={`mr-8 ml-2 absolute left-0 top-80 pr-2 pt-4 sm:-mr-10 sm:pr-4`}>
+          <div className={`mr-8 ml-2 absolute left-0 top-40 pr-2 pt-4 sm:-mr-10 sm:pr-4`}>
             <button
               type="button"
               className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white opacity-100"
@@ -77,7 +77,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
                 leaveFrom="opacity-100"
                 leaveTo="opacity-100"
               >
-                <div className={`absolute right-11 top-80 -mr-8 pr-2 pt-4 sm:-mr-10 sm:pr-4 z-50`}>
+                <div className={`absolute right-11 top-40 -mr-8 pr-2 pt-4 sm:-mr-10 sm:pr-4 z-50`}>
                   <button
                     type="button"
                     className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white opacity-100"
