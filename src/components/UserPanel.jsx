@@ -19,7 +19,7 @@ export default function UserPanel() {
   const [titleTablero, setTitleTablero] = useState('');
   const [selectedTablero, setSelectedTablero] = useState('');
   const tablerosRef = collection(db, 'Trello');
-  const darkColors= darkMode?'bg-blue-700/25 text-gray-100':'bg-blue-300/50 text-gray-100'
+  const darkColors= darkMode?'bg-gray-700/25 text-gray-100':'bg-blue-300/50 text-gray-100'
 
   const obtenerTableros = async () => {
     if (userId === null) {
@@ -133,8 +133,9 @@ export default function UserPanel() {
   /*  */
 
   return userId ? (
-    <div onClick={obtenerTableros} className={`${darkMode ? 'bg-gray-900 w-screen h-screen font-sans' : 'bg-blue w-screen h-screen font-sans'}`}>
+    <div onClick={obtenerTableros} className={`${darkMode ? 'bg-gray-900 w-screen h-screen font-sans' : 'bg-blue w-screen h-screen font-sans'} `}>
       <Header />
+      <div>
       <OffCanvasMenu 
         tablero={tablero}
         setShowTablero={setShowTablero}
@@ -152,8 +153,8 @@ export default function UserPanel() {
         hideTablero={hideTablero}
 
       />
-      <div className="md:inline-flex my-5 mx-4">
-      {/* {tablero.map((tablerox) => (
+      {/*<div className="md:inline-flex my-5 mx-4">
+       {tablero.map((tablerox) => (
       
       <div className="d-flex my-5 border-white" style={{marginTop:"5%"}}key={tablerox.id}>
         <Card className={`d-flex mx-2 ${darkColors} rounded-md px-10 py-3`} >
@@ -173,9 +174,9 @@ export default function UserPanel() {
           </Card.Body>
         </Card> 
         </div>
-      ))} */}
+      ))} 
       
-     </div>
+     </div>*/}
       {/*  <div className="d-block pb-8 mx-4">
             {showInputTablero?(
               <InputTablero
@@ -194,7 +195,7 @@ export default function UserPanel() {
               </Button>
             )}
      </div> */}
-     <div className={`container-fluid ${darkColors}`}>
+     <div className={`container-fluid ${darkColors} rounded-sm`}>
       {showTablero && tablero.length>0? (
         selectedTablero!==''?
         <List 
@@ -207,8 +208,9 @@ export default function UserPanel() {
       )}
       </div>
     </div>
+  </div>
   ) : (
-    <h2>No hay usuarios..</h2>
+    <h2>Loading..</h2>
   );
 }
 

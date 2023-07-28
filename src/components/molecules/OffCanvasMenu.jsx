@@ -15,23 +15,23 @@ export default function OffCanvasMenu({tablero,setShowTablero,
                                       tableroLong}) {
   const {darkMode}= useDarkMode();
   const [open, setOpen] = useState(true)
-  const [posx, setPosx] = useState(0);
-  const darkColors= darkMode?'bg-blue-700/25 text-gray-100':'bg-blue-300/50 text-gray-100'
+  const darkColors= darkMode?'bg-gray-800 text-gray-100':'bg-blue-400 text-gray-100'
 
-  const handleOpen = ()=>{
-    setOpen(!open)
-    open==false?setPosx(12):setPosx(0)
 
-  }
-  
+  const handleShowTablero = (id) => {
+    setShowTablero(true);
+    setSelectedTablero(id)
+    
+  };
+
   return (
     <>
     
-          <div className={`mr-8 absolute left-${posx} top-80 pr-2 pt-4 sm:-mr-10 sm:pr-4`}>
+          <div className={`mr-8 ml-2 absolute left-0 top-80 pr-2 pt-4 sm:-mr-10 sm:pr-4`}>
             <button
               type="button"
               className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white opacity-100"
-              onClick={handleOpen} 
+              onClick={() => setOpen(!open)} 
               hidden={open}
             >
               <span className="sr-only">Close panel</span>
@@ -77,12 +77,11 @@ export default function OffCanvasMenu({tablero,setShowTablero,
                 leaveFrom="opacity-100"
                 leaveTo="opacity-100"
               >
-                {/* <div className={`flex justify-end items-center  -mr-8 pr-2 pt-4 sm:-mr-10 sm:pr-4`}> */}
-                <div className= {`absolute right-${posx} top-80 flex items-center pr-2 pt-4 sm:-mr-10 sm:pr-4 z-50`}>
+                <div className={`absolute right-11 top-80 -mr-8 pr-2 pt-4 sm:-mr-10 sm:pr-4 z-50`}>
                   <button
                     type="button"
                     className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white opacity-100"
-                    onClick={handleOpen}
+                    onClick={() => setOpen(!open)}
                   >
                     <span className="sr-only">Close panel</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -95,7 +94,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
               <div className={`flex h-full flex-col overflow-y-scroll ${darkColors} py-6 shadow-xl`}>
                 <div className="px-4 sm:px-6">
                   <Dialog.Title className="text-base font-semibold leading-6">
-                    Panel title
+                    Tableros
                   </Dialog.Title>
                 </div>
                 <div className="relative mt-6 flex-1 px-4 sm:px-6">
@@ -103,16 +102,16 @@ export default function OffCanvasMenu({tablero,setShowTablero,
                     <div className="d-flex my-5 border-white" style={{marginTop:"5%"}}key={tablerox.id}>
                         
                         <Card className={`d-flex mx-2 ${darkColors} rounded-md px-10 py-3`} >
-                        <Card.Header className="text-lg text-center text-gray-100 py-5">{tablerox.Titulo}</Card.Header>
+                        <Card.Header className="text-md text-center text-gray-100 py-5">{tablerox.Titulo}</Card.Header>
                         <Card.Body className="flex space-x-4 text-center justify-center">
                             <Button
-                            className="text-gray-100 bg-blue-600/50 hover:opacity-75 rounded-md p-2 word-break"
+                            className="text-sm text-gray-100 bg-blue-600/50 hover:opacity-75 rounded-md p-2 word-break"
                             onClick={() => handleShowTablero(tablerox.id)}
                             >
                             Mostrar Tablero
                             </Button>
                             <Button 
-                            className="text-gray-100 bg-gray-600 bg-opacity-50 hover:opacity-75 text-gray-100/75 p-2 rounded-md word-break" 
+                            className="text-sm text-gray-100 bg-gray-600 bg-opacity-50 hover:opacity-75 text-gray-100/75 p-2 rounded-md word-break" 
                             onClick={() => quitTablero(tablerox.id)}>
                             Eliminar Tablero
                             </Button>
@@ -120,7 +119,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
                         </Card> 
                         </div>
                     ))}
-                    <div className="d-block pb-8 mx-4">
+                    <div className="d-block pb-8 md-mx-auto">
                         {showInputTablero?(
                         <InputTablero
                             
@@ -133,7 +132,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
                             classVar={darkColors}
                         />
                         ):(
-                        <Button onClick={hideTablero} className={`w-64 border-none rounded-2xl text-start ps-3 py-3 pe-8 pe-8 ${darkMode?'bg-blue-400/25 text-gray-100':'bg-blue-300/50 text-white'} hover:opacity-75  text-sm ml-2 px-10`}>
+                        <Button onClick={hideTablero} className={`w-64 border-none rounded-2xl text-start ps-3 py-3 pe-8 pe-8 ${darkMode?'bg-gray-500/25 text-gray-100':'bg-blue-300/50 text-white'} hover:opacity-75  text-sm ml-2 px-10`}>
                         {tablero.length<1?("+Añada un tablero..."):("+Añada otro tablero...")}
                         </Button>
                         )}
