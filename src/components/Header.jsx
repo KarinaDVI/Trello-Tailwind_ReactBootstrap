@@ -74,7 +74,7 @@ export default function Header() {
             </div>
             
            
-            <div className="flex justify-between p-4 m-4">
+            <div className=" hidden md:flex justify-between p-4 m-4">
                 <div className="flex">
                     <h3 className={`${textLight} mr-4`}>TailwindComponents.com</h3>
                     <ul className={`list-reset ${textLight} hidden md:flex`}>

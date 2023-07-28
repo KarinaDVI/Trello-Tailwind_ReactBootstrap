@@ -97,13 +97,14 @@ export default function OffCanvasMenu({tablero,setShowTablero,
                     Tableros
                   </Dialog.Title>
                 </div>
-                <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                <div className="relative mt-6 flex-1 px-4 sm:px-6 ">
                     {tablero.map((tablerox) => (
-                    <div className="d-flex my-5 border-white" style={{marginTop:"5%"}}key={tablerox.id}>
+                    <div className="d-flex  border-white" key={tablerox.id}>
                         
-                        <Card className={`d-flex mx-2 ${darkColors} rounded-md px-10 py-3`} >
-                        <Card.Header className="text-md text-center text-gray-100 py-5">{tablerox.Titulo}</Card.Header>
+                        <Card className={`d-flex mx-2 ${darkColors} rounded-md px-10 py-2`} >
+                        <Card.Header className="text-md text-center text-gray-100 py-3">{tablerox.Titulo}</Card.Header>
                         <Card.Body className="flex space-x-4 text-center justify-center">
+                            
                             <Button
                             className="text-sm text-gray-100 bg-blue-600/50 hover:opacity-75 rounded-md p-2 word-break"
                             onClick={() => handleShowTablero(tablerox.id)}
@@ -119,7 +120,7 @@ export default function OffCanvasMenu({tablero,setShowTablero,
                         </Card> 
                         </div>
                     ))}
-                    <div className="d-block pb-8 md-mx-auto">
+                    <div className="d-block pb-8 pt-2 md-mx-auto">
                         {showInputTablero?(
                         <InputTablero
                             
