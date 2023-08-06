@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { auth } from '../assets/firebaseConfig/firebase';
 import {Link, useNavigate} from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
@@ -18,22 +18,30 @@ const handleSubmit = async(e)=>{
     e.preventDefault();
     try{
         await signIn(loginEmail, loginPassword)
-
         navigate('/home/:userId');
     }catch(e){
         console.log(e.message)
         setErrorMessage('Usuario o contraseña incorrectos. Prueba de nuevo')
-        navigate('/')
+        /* navigate('/') */
     }
 }
 const forgotPasswordHandler = (e) => {
   e.preventDefault();
   const email = emailRef.current.value;
-    if (email)
-      forgotPassword(email).then(() => {
-        emailRef.value=""
+  if (email) {
+    forgotPassword(email)
+      .then(() => {
+        emailRef.current.value = "";
+        setErrorMessage("Se ha enviado un mail de recuperación a la direccion ingresadda. Por favor verifique su casilla"); 
+      })
+      .catch((error) => {
+        
+        setErrorMessage("No existe un usuario registrado con ese nombre. Prueba de nuevo");
       });
-}
+  } else {
+    setErrorMessage("Por favor, ingresa una dirección de email válida."); // Handle empty email case separately if required
+  }
+};
 
   return (
     <section className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">    
@@ -75,7 +83,7 @@ const forgotPasswordHandler = (e) => {
                         Contraseña
                       </label>
                       <div className="block sm:flex text-sm pb-2 sm:justify-right">
-                        <a href="#" onClick={(forgotPasswordHandler)} className="text-sm font-light text-indigo-500 dark:text-gray-400">
+                        <a href="#" onClick={(forgotPasswordHandler)} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                           *Olvidaste la contraseña?
                         </a>
                       </div>

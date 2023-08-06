@@ -153,48 +153,6 @@ export default function UserPanel() {
         hideTablero={hideTablero}
 
       />
-      {/*<div className="md:inline-flex my-5 mx-4">
-       {tablero.map((tablerox) => (
-      
-      <div className="d-flex my-5 border-white" style={{marginTop:"5%"}}key={tablerox.id}>
-        <Card className={`d-flex mx-2 ${darkColors} rounded-md px-10 py-3`} >
-          <Card.Header className="text-lg text-center text-gray-100 py-5">{tablerox.Titulo}</Card.Header>
-          <Card.Body className="flex space-x-4 text-center justify-center">
-            <Button
-              className="text-gray-100 bg-blue-600/50 hover:opacity-75 rounded-md p-2 word-break"
-              onClick={() => handleShowTablero(tablerox.id)}
-            >
-              Mostrar Tablero
-            </Button>
-            <Button 
-            className="text-gray-100 bg-gray-600 bg-opacity-50 hover:opacity-75 text-gray-100/75 p-2 rounded-md word-break" 
-            onClick={() => quitTablero(tablerox.id)}>
-              Eliminar Tablero
-            </Button>
-          </Card.Body>
-        </Card> 
-        </div>
-      ))} 
-      
-     </div>*/}
-      {/*  <div className="d-block pb-8 mx-4">
-            {showInputTablero?(
-              <InputTablero
-
-                userId={userId}
-                handleAddTablero={handleAddTablero}
-                cancelTablero={cancelTablero}
-                tableroId={tablero.id}
-                setTitleTablero={setTitleTablero}
-                titleTablero={titleTablero}
-                classVar={darkColors}
-              />
-            ):(
-              <Button onClick={hideTablero} className={`w-64 border-none rounded-2xl text-start ps-3 py-3 pe-8 pe-8 ${darkMode?'bg-blue-400/25 text-gray-100':'bg-blue-300/50 text-white'} hover:opacity-75  text-sm ml-2 px-10`}>
-              {tablero.length<1?("+Añada un tablero..."):("+Añada otro tablero...")}
-              </Button>
-            )}
-     </div> */}
      <div className={`container-fluid ${darkColors} rounded-sm`}>
       {showTablero && tablero.length>0? (
         selectedTablero!==''?
