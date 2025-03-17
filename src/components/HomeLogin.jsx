@@ -39,7 +39,7 @@ const forgotPasswordHandler = (e) => {
         setErrorMessage("No existe un usuario registrado con ese nombre. Prueba de nuevo");
       });
   } else {
-    setErrorMessage("Por favor, ingresa una dirección de email válida."); // Handle empty email case separately if required
+    setErrorMessage("Por favor, ingresa una dirección de email válida."); 
   }
 };
 
@@ -47,11 +47,7 @@ const forgotPasswordHandler = (e) => {
     <section className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">    
       <div className="w-full max-w-md">
         <a className="flex items-center justify-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img
-            className="w-8 h-8 mr-2"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
+          <svg className="w-10 h-10 mr-2" fill="rgb(79, 70, 229)" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -100,7 +96,7 @@ const forgotPasswordHandler = (e) => {
                 </div>
                   <button
                     type="submit"
-                    className="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                    className="w-full text-white  hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
                   >
                     Loguearse
                   </button>
